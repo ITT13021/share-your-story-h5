@@ -47,10 +47,12 @@ body,div{
 
 .h_right {
 	float: right;
+    margin-top: 25px;
 }
 .w980{
 	width: 980px;
-	margin: 0 auto;
+	margin: 50px auto;
+    height: 600px;
 }
 .logo_box{
 	float: left;
@@ -70,6 +72,7 @@ a:link{
 	float: left;
 	width: 367px;
 	height: 600px;
+    margin-top: -5px;
 	background: url(./../image/login_icon_list.png) 0 -115px no-repeat;
 }
 .loginul{
