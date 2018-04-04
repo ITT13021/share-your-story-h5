@@ -1,16 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>登录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>享忆</title>
 		<link rel="stylesheet" type="text/css" href="./css/login.css"/>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+
+	</head>
+	<body ng-app="shareStoryApp" ng-cloak>
+		<div ui-view></div>
+		<!-- Bootstrap JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="./bower_components/bootstrap/assets/js/vendor/jquery-slim.min.js"></script>
+		<script src="./bower_components/bootstrap/assets/js/vendor/popper.min.js"></script>
+		<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+		<!-- Angular JavaScript -->
 		<script src="./bower_components/angular/angular.min.js"></script>
 		<script src="./bower_components/angular-route/angular-route.min.js"></script>
 		<script src="./bower_components/angular-resource/angular-resource.min.js"></script>
-	</head>
-	<body ng-app="shareStoryApp" ng-cloak>
-		<div ng-view></div>
+		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 	</body>
+
 	<script src="./js/config.js"></script>
 	<script src="./js/controllers.js"></script>
 	<script src="./js/factory.js"></script>

@@ -1,13 +1,14 @@
-var shareStoryApp = angular.module("shareStoryApp", ['ngRoute', 'ngResource']);
+var shareStoryApp = angular.module("shareStoryApp", ['ngRoute', 'ngResource', 'ui.router']);
 
-shareStoryApp.config(['$routeProvider', function($routeProvider){
-	$routeProvider.when('/login', {
+shareStoryApp.config(['$routeProvider','$stateProvider', function($routeProvider, $stateProvider){
+    $stateProvider.state('login', {
+        url: '/login',
         templateUrl: '../templates/login.html',
         controller: 'LoginCtrl'
-    }).when('/register', {
+    })
+    .state('register', {
+        url: '/register',
         templateUrl: '../templates/register.html',
         controller: 'RegisterCtrl'
-    }).otherwise({
-        redirectTo: '/login'
-    });
-}])
+    })
+}]);

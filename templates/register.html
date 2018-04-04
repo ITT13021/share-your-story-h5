@@ -1,4 +1,7 @@
-<div id="append"></div>
+<div id="append" class="alert alert-danger alert-dismissable fade show" style="text-align: center" ng-if="loginErr">
+    <button type="button" class="close" ng-click="closeLoginErr()">&times;</button>
+    <span style="font-size: 15px"><strong>{{errMessage}}</strong></span>
+</div>
 <div class="full_sc">
 	<div class="head_cent head_cwo ClearFix">
 		<div class="h_logo">
@@ -30,11 +33,11 @@
                 <div class="form">
                 <form>
                     <div class="item">
-                        <input placeholder="请输入昵称" class="itxt" autocomplete="off" tabindex="1" maxlength="11" ng-model="username" type="text">
+                        <input placeholder="请输入昵称" class="form-control" maxlength="11" ng-model="username" type="text">
                     </div>
                     <div class="item"></div>
                     <div class="item">
-                        <input placeholder="请输入手机号码" class="itxt" autocomplete="off" tabindex="1" maxlength="11" ng-model="cellphone" type="text">
+                        <input placeholder="请输入手机号码" class="form-control" maxlength="11" ng-model="cellphone" type="number">
                         <div class="err_box">
                             <div class="err_msg2" style="display: none;" id="error_mobile">请输入11位手机号码</div>
                         </div>
@@ -51,13 +54,13 @@
                         </div>
                     </div>
                     <div class="item item2">
-                        <input placeholder="请输入密码" tabindex="4" maxlength="20" class="itxt" ng-model="password_1" type="password" ng-change="passwordConfirm()">
+                        <input placeholder="请输入密码" tabindex="4" maxlength="20" class="form-control" ng-model="password_1" type="password" ng-change="passwordConfirm()">
                         <div class="err_box">
                             <div class="err_msg2" style="display: none;" id="error_password">请输入您的密码,您的密码可能为字母、数字或符号组合</div>
                         </div>
                     </div>
                     <div class="item item2">
-                        <input placeholder="请再次输入密码" class="itxt" tabindex="5" maxlength="20" ng-model="password_2" type="password" ng-change="passwordConfirm()">
+                        <input placeholder="请再次输入密码" class="form-control" tabindex="5" maxlength="20" ng-model="password_2" type="password" ng-change="passwordConfirm()">
                         <div class="err_box">
                             <div ng-if="!passwordDifferent" class="err_msg2" id="error_password_confirm" style="color: red">密码不相同！</div>
                         </div>
@@ -70,7 +73,7 @@
                     </div>
                     <div class="item item5">
                         <div class="login-btn">
-                            <a id="loginsubmit" tabindex="7" class="btn-img btn-entry" href="javascript:;" ng-click="register()">立即注册</a>
+                            <button type="button" class="btn btn-outline-danger btn-lg" style="width: 317px; height: 50px" ng-click="register()">立即注册</button>
                         </div>
                         <div class="agree">
                             <input class="jdcheckbox" tabindex="8" name="agree" id="agree" checked="checked" type="checkbox">
