@@ -19,6 +19,8 @@
     "angular-resource": "^1.6.9",
     "angular-route": "^1.6.9",
     "bootstrap": "^4.0.0",
-    "angular-ui-router": "^1.0.15"
+    "angular-ui-router": "^1.0.15",
+    "angular-cookies": "^1.6.9",
+    "underscore": "^1.8.3"
   }
 }
