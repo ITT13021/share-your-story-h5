@@ -90,7 +90,7 @@
                     <img src="{{product.img}}" style="width: 100%"/>
                 </div>
                 <div class="detail_share">
-                    <div class="detail_sc">
+                    <div class="detail_sc" ng-click="collect()" data-title="消息" data-toggle="collectpopover" data-trigger="focus" data-placement="left" data-content="收藏成功！">
                         <i class="i_addsc"></i> 收藏商品
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                         </div>
                         <div class="model_wrap">
                             <div class="model_submilt">
-                                <button type="button" class="btn btn-outline-danger" style="width: 150px;height: 40px;" ng-click="registerOrLogin('login')">我想要</button>
+                                <button type="button" class="btn btn-outline-danger" style="width: 150px;height: 40px;" ng-click="iWant()">我想要</button>
                             </div>
                         </div>
                     </div>
@@ -152,9 +152,13 @@
                             </div>
                         </div>
                         <div class="detail_l_con3 " ng-if="user_token">
-                            <textarea class="product_message_textarea" cols="30" rows="10" placeholder="请输入留言内容" ng-model="message"></textarea>
-                            <span style="float: right; font-size: 15px">{{180-message.length}}/180</span>
-                            <div class="d_h2" style="margin-top: 10px"></div>
+                            <textarea id="message" ng-style="want" ng-model="message.message" class="product_message_textarea" cols="30" rows="10" placeholder="请输入留言内容" maxlength="180"></textarea>
+                            <div style="float: right;margin-top: 30px">
+                                <button data-title="消息" data-toggle="messagepopover" data-trigger="focus" data-placement="left" data-content="发送成功！" type="button" class="btn btn-outline-danger" style="width: 70px;height: 40px;" ng-click="uploadMessage()">提交</button>
+                                <span style="font-size: 15px;padding-left: 20px">{{180-message.message.length}}/180</span>
+                            </div>
+
+                            <div class="d_h2" style="margin-top: 50px"></div>
                             <ul ng-if="productMessage.length != 0">
                                 <li class="appraise_li " ng-repeat="message in productMessage">
                                     <div class="a_li_t1 ">
@@ -164,9 +168,9 @@
                                     <div class="a_li_t2 "></div>
                                     <div class="a_li_t3 "></div>
                                     <div class="a_li_t4 ">
-                                        <img src="image/user_center_img4.jpg "><br><span>{{message.create_user.username}}</span>
+                                        <img src="../image/user_center_img4.jpg "><br><span>{{message.create_user.username}}</span>
                                     </div>
-                                    <span>回复</span>
+                                    <!--<div style="margin-top: 20px"><span>回复</span></div>-->
                                 </li>
                             </ul>
                         </div>
@@ -298,7 +302,7 @@
                 <i class="online_cus"></i>
             </div>
             <div class="top_is">
-                <a href="javascipt:;">
+                <a href="javascript:scrollTo(0,0);" title="回到顶部">
                     <i class="retrun_top"></i>
                 </a>
             </div>

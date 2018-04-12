@@ -22,15 +22,20 @@ shareStoryApp.config(['$routeProvider','$stateProvider', '$urlRouterProvider', '
         templateUrl: '../templates/detail.html',
         controller: 'DetailCtrl'
     })
+    .state('user', {
+        url: '/user',
+        templateUrl: '../templates/user.html',
+        controller: 'UserCtrl'
+    })
     .state('otherwise', {
         url: '/otherwise',
         templateUrl: '../templates/home.html',
         controller: 'HomeCtrl'
     });
     $httpProvider.interceptors.push(function ($cookies) {
-        var user_token = $cookies.get("token");
         return {
             'request': function (config) {
+                var user_token = $cookies.get("token");
                 if (user_token) {
                     config.headers['authorization'] = 'Token ' + user_token;
                 }

@@ -70,12 +70,13 @@
                 <div class="login_l" ng-if="user_token">
                     <span>欢迎来到享忆!</span>
                     <span>{{username}}</span>
+                    <span ng-click="logOut()" style="cursor: pointer"> <strong>[登出]</strong></span>
                 </div>
             </div>
             <div class="h_t_r">
                 <ul>
                     <li>
-                        <a href="">我的享忆</a>
+                        <a href="#!/user">我的享忆</a>
                         <span class="line"></span>
                     </li>
                     <li>
@@ -860,7 +861,7 @@
             <i class="online_cus"></i>
         </div>
         <div class="top_is">
-            <a href="#top" title="回到顶部">
+            <a href="javascript:scrollTo(0,0);" title="回到顶部">
                 <i class="retrun_top"></i>
             </a>
         </div>

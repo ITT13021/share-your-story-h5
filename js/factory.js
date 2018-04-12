@@ -11,7 +11,13 @@ shareStoryApp.factory('User', function ($resource) {
     return {
         products: $resource(api + 'products/products'),
         productsclassification: $resource(api + 'products/productsclassification'),
-        productscollect: $resource(api + 'products/productscollect'),
-        productsmessage: $resource(api + 'products/productsmessage')
+        productscollect: $resource(api + 'products/productscollect/:id/?v=1'),
+        productsmessage: $resource(api + 'products/productsmessage/?v=1')
+    }
+})
+.factory('News', function ($resource) {
+    var api = 'http://127.0.0.1:8000/api/';
+    return {
+        news: $resource(api + 'news/news')
     }
 });
