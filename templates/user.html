@@ -31,12 +31,13 @@
                 <div class="login_l" ng-if="user_token">
                     <span>欢迎来到享忆!</span>
                     <span>{{user.username}}</span>
+                    <span ng-click="logOut()" style="cursor: pointer"> <strong>[登出]</strong></span>
                 </div>
             </div>
             <div class="h_t_r">
                 <ul>
                     <li>
-                        <a href="">我的享忆</a>
+                        <a href="#!/user">我的享忆</a>
                         <span class="line"></span>
                     </li>
                     <li>
@@ -89,14 +90,17 @@
         <div class="ur_slide">
             <a href=""><h2 class="slide_h2"><b></b>我的享忆</h2></a>
             <ul class="slide_list">
-                <li class="no">
-                    <a href="">我的资料</a>
+                <li class="no" ng-click="getTabContent('myInformation')" ng-style="myInformationCss">
+                    <a style="width: 100%; cursor: pointer">我的资料</a>
                 </li>
-                <li>
-                    <a href="">我的收藏</a>
+                <li ng-click="getTabContent('myProducts')" ng-style="myProductsCss">
+                    <a style="width: 100%; cursor: pointer">我的发布</a>
                 </li>
-                <li>
-                    <a href="">系统消息</a>
+                <li ng-click="getTabContent('myCollect')" ng-style="myCollectCss">
+                    <a style="width: 100%; cursor: pointer">我的收藏</a>
+                </li>
+                <li ng-click="getTabContent('myNews')" ng-style="myNewsCss">
+                    <a style="width: 100%; cursor: pointer">我的消息</a>
                 </li>
             </ul>
         </div>
@@ -125,7 +129,60 @@
                 </div>
             </div>
         </div>
-        <div class="uc_c_right">
+
+        <!--我的发布-->
+        <div class="uc_c_right" ng-if="nowTab == 'myProducts'">
+            <div class="order_tips">
+                <ul>
+                    <li>
+                        <div class="d_h2"><h2><span></span>我的发布</h2></div>
+                    </li>
+                </ul>
+            </div>
+
+            <!--“我的发布” 表格-->
+            <div class="table-responsive" ng-if="productCollects" ng-cloak>
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>名称</th>
+                        <th>价格</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="product in myProducts">
+                        <td>{{product.name}}</td>
+                        <td>{{product.price}}</td>
+                        <td ng-if="product.status==0">已上架</td>
+                        <td ng-if="product.status==1">已下架</td>
+                        <td ng-if="product.status==0">
+                            <button type="button" class="btn btn-outline-danger btn-sm" style="height: 40px;width: 80px;" ng-click="setProductStatus(product.id, 1)">下架</button>
+                        </td>
+                        <td ng-if="product.status==1">
+                            <button type="button" class="btn btn-outline-danger btn-sm" style="height: 40px;width: 80px;" ng-click="setProductStatus(product.id, 0)">上架</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-if="myProducspageList.length>1">
+                    <ul class="pagination" style="float: right;margin-right: 110px">
+                        <li class="page-item" ng-click="Previous('myProducts')"><a class="page-link">Previous</a></li>
+                        <li class="page-item" ng-repeat="i in myProducspageList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-click="Next('myProducts')"><a class="page-link">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="seufe" ng-show="!myProducts" ng-cloak>
+                <div class="detail_l_con4">
+                    <div class="no_data"><img src="./image/no_data.png"><span>您还没有发布任何商品!</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!--我的收藏-->
+        <div class="uc_c_right" ng-if="nowTab == 'myCollect'">
             <div class="order_tips">
                 <ul>
                     <li>
@@ -151,16 +208,16 @@
                         <td>{{collect.product_info.price}}</td>
                         <td>{{collect.product_info.create_user.username}}</td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-sm" style="height: 40px;width: 80px;" ng-click="cancelCollect(collect.id)">取消收藏</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" style="height: 40px;width: 80px;" ng-click="cancelCollect(collect.id)">取消收藏</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <div ng-if="pageList.length>1">
+                <div ng-if="myCollectspageList.length>1">
                     <ul class="pagination" style="float: right;margin-right: 110px">
-                        <li class="page-item" ng-click="Previous()"><a class="page-link">Previous</a></li>
-                        <li class="page-item" ng-repeat="i in pageList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
-                        <li class="page-item" ng-click="Next()"><a class="page-link">Next</a></li>
+                        <li class="page-item" ng-click="Previous('collect')"><a class="page-link">Previous</a></li>
+                        <li class="page-item" ng-repeat="i in myCollectspageList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-click="Next('collect')"><a class="page-link">Next</a></li>
                     </ul>
                 </div>
             </div>
@@ -254,107 +311,3 @@
         </div>
     </div>
 </div>
-<!--底部end-->
-<!--<div class="w1200">-->
-<!--&lt;!&ndash;下拉搜索&ndash;&gt;-->
-<!--<div id="nav" class="search_fixed">-->
-<!--<div class="w1200">-->
-<!--<div class="s_fixed_l"><img src="../image/search_logo.png" style="height: 40px; margin: 2px 0 0 50px"/></div>-->
-<!--<div class="s_fixed_r">-->
-<!--<form action="" method="post">-->
-<!--<div class="input-group">-->
-<!--<input type="text" class="form-control" placeholder="搜你想搜!" style="height: 35.08px;width: 600px">-->
-<!--<span class="input-group-btn">-->
-<!--<button class="btn btn-danger" type="button" style="height: 37.08px;width: 80px">-->
-<!--搜索-->
-<!--</button>-->
-<!--</span>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;下拉搜索end&ndash;&gt;-->
-<!--&lt;!&ndash;底部公用&ndash;&gt;-->
-<!--<div class="footer">-->
-<!--&lt;!&ndash;<div class="footer_b w1200"><img src="./image/foot_img1.jpg"/></div>&ndash;&gt;-->
-<!--<div class="footer_help w1200">-->
-<!--<div class="footer1_l" style="margin-left: 20%">-->
-<!--<dl class="helpDl">-->
-<!--<dt><h5>使用帮助</h5></dt>-->
-<!--<dd><a href="">税费收取规则 </a></dd>-->
-<!--<dd><a href="">新手指南 </a></dd>-->
-<!--<dd><a href="">常见问题 </a></dd>-->
-<!--<dd><a href="">用户协议 </a></dd>-->
-<!--</dl>-->
-<!--<dl class="helpDl">-->
-<!--<dt><h5>会员服务</h5></dt>-->
-<!--<dd><a href="">积分政策 </a></dd>-->
-<!--<dd><a href="">会员权益 </a></dd>-->
-<!--<dd><a href="">会员等级 </a></dd>-->
-<!--</dl>-->
-<!--<dl class="helpDl">-->
-<!--<dt><h5>支付方式</h5></dt>-->
-<!--<dd><a href="">积分支付 </a></dd>-->
-<!--<dd><a href="">货到付款 </a></dd>-->
-<!--<dd><a href="">在线支付 </a></dd>-->
-<!--<dd><a href="">优惠券支付 </a></dd>-->
-<!--</dl>-->
-<!--<dl class="helpDl">-->
-<!--<dt><h5>配送方式</h5></dt>-->
-<!--<dd><a href="">包邮政策 </a></dd>-->
-<!--<dd><a href="">费用说明 </a></dd>-->
-<!--<dd><a href="">配送说明 </a></dd>-->
-<!--</dl>-->
-<!--<dl class="helpDl">-->
-<!--<dt><h5>售后服务</h5></dt>-->
-<!--<dd><a href="">电子发票 </a></dd>-->
-<!--<dd><a href="">售后咨询 </a></dd>-->
-<!--<dd><a href="">退货办理 </a></dd>-->
-<!--<dd><a href="">退货政策 </a></dd>-->
-<!--</dl>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="footer_nav">-->
-<!--<div class="w720">-->
-<!--<ul>-->
-<!--<li>-->
-<!--<a href="">关于享忆 </a>-->
-<!--<span class="line"></span>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a href="">投资者关系 </a>-->
-<!--<span class="line"></span>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a href="">商家入驻 </a>-->
-<!--<span class="line"></span>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a href="">联系我们 </a>-->
-<!--<span class="line"></span>-->
-<!--</li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="footer_bottom">-->
-<!--<div class="w1200">-->
-<!--<p>-->
-<!--<span class="font_arial">Copyright© 2006-2016 happigo. All Rights Reserved </span>-->
-<!--免费服务热线: 400-705-1111 | 固话也可拨打: 800-705-1111-->
-<!--<span class="font_arial">E-Mail: service@happigo.com</span><br>-->
-<!--湘ICP备12000157号 信息网络传播视听节目许可证号：1810530-->
-<!--</p>-->
-<!--<p class="footer_b">-->
-<!--<a href="http://www.itrust.org.cn/home/index/itrust_certifi/wm/2782875193.html">-->
-<!--<img src="./image/foot_img3.png"/>-->
-<!--</a>-->
-<!--<a href="https://search.szfw.org/cert/l/CX20150428007576007720">-->
-<!--<img src="image/foot_img4.png"/>-->
-<!--</a>-->
-<!--</p>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;底部end&ndash;&gt;-->
-<!--</div>-->

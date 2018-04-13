@@ -79,9 +79,33 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         '         佛祖保佑       永无BUG\n' +
         '');
 
+
+    // 声明相关变量
+    $scope.loginErr = false;
+    $scope.selectedProvince = {"id": null, "name": '请选择省份'};
+    $scope.selectedCity = {"id": null, "name": '请选择城市'};
+    $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
+    $scope.selectedClassification = {"id": null, "name": '请选择分类'};
+    $scope.productPrice = null;
+    $scope.productBuyPrice = null;
+    $scope.productDescription = null;
+    $scope.productName = null;
+
+    // 关闭错误提示
+    $scope.closeLoginErr = function () {
+        $scope.loginErr = !$scope.loginErr;
+    };
+
     // 获取用户相关信息
     $scope.user_token = $cookies.get("token");
     $scope.username = $cookies.get("username");
+
+    // 登出
+    $scope.logOut = function () {
+        $cookies.remove("token");
+        $scope.user_token = '';
+        $scope.getProducts();
+    };
 
     // 随机产生n张不同的图片
     $scope.getDifferentImg = function (obj) {
@@ -117,11 +141,85 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         $state.go('detail')
     };
 
-    // 登出
-    $scope.logOut = function () {
-        $cookies.remove("token");
-        $scope.user_token = '';
-        $scope.getProducts();
+    // 模态窗发布商品---------------------------------------
+
+    // 获取省份、城市、学校
+    $scope.getProvince = function () {
+        User.province.get(function (res) {
+            $scope.provinceList = res.results;
+        })
+    };
+
+    $scope.getCity = function (province) {
+        User.city.get({"province": province}, function (res) {
+            $scope.cityList = res.results;
+        })
+    };
+
+    $scope.getSchool = function (city) {
+        User.school.get({"city": city}, function (res) {
+            $scope.schoolList = res.results;
+        })
+    };
+
+    $scope.getProvince();
+
+    $scope.selectProvince = function (province) {
+        $scope.selectedProvince = province;
+        $scope.getCity(province.id);
+    };
+
+    $scope.selectCity = function (city) {
+        $scope.selectedCity = city;
+        $scope.getSchool(city.id);
+    };
+
+    $scope.selectSchool = function (school) {
+        $scope.selectedSchool = school;
+    };
+
+    // 获取商品分类
+    Products.productsclassification.get(function (res) {
+        $scope.productClassificationList = res.results;
+    });
+
+    $scope.selectClassification = function (classification) {
+        $scope.selectedClassification = classification
+    };
+
+    // 发布商品
+    $scope.addProduct = function () {
+        if(!$scope.productPrice || !$scope.productName || !$scope.selectedSchool.id || !$scope.selectedClassification.id){
+            var model = $('[data-toggle="addProductpopover"]');
+            model[0].dataset.content = "您还有必填项没有填写哦！";
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000);
+            return
+        }
+        $scope.newProduct = {};
+        $scope.newProduct = {"price": $scope.productPrice, "buy_price": $scope.productBuyPrice, "description": $scope.productDescription, "name": $scope.productName, "school": $scope.selectedSchool.id, "classification": $scope.selectedClassification.id};
+        Products.products.save($scope.newProduct,function (res) {
+            $('#addedProduct').modal('hide');
+            $scope.loginErr = true;
+            $scope.errMessage = '发布成功！';
+            $scope.selectedProvince = {"id": null, "name": '请选择省份'};
+            $scope.selectedCity = {"id": null, "name": '请选择城市'};
+            $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
+            $scope.selectedClassification = {"id": null, "name": '请选择分类'};
+            $scope.productPrice = null;
+            $scope.productBuyPrice = null;
+            $scope.productDescription = null;
+            $scope.productName = null;
+        },function (err) {
+            var model = $('[data-toggle="addProductpopover"]');
+            model[0].dataset.content = "发布失败，请稍后再试！";
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000)
+        })
     }
 
 })
@@ -146,10 +244,16 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.username = $cookies.get("username");
     $scope.product = JSON.parse($cookies.get("product"));
 
-
     // 登录或注册
     $scope.registerOrLogin = function (page) {
         $state.go(page)
+    };
+
+    // 登出
+    $scope.logOut = function () {
+        $cookies.remove("token");
+        $scope.user_token = '';
+        $scope.getProducts();
     };
 
 
@@ -213,53 +317,103 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     // 声明变量
     $scope.selPage = 1; // 选中页数
+    $scope.nowTab = 'myProducts';    // 当前所在tab
 
     // 获取用户相关信息
     $scope.user_token = $cookies.get("token");
     $scope.username = $cookies.get("username");
     $scope.user = JSON.parse($cookies.get('user'));
 
+    // 登出
+    $scope.logOut = function () {
+        $cookies.remove("token");
+        $scope.user_token = '';
+        $scope.getProducts();
+    };
+
+    $scope.getTabContent = function (item) {
+        $scope.nowTab = item;
+        set_css();
+    };
+
+    // 设置Tab样式----------------------------------------------------
+
+    $scope.tab_css = [{"background-color": "#FF6F7D"}, {"background-color": "transparent"}];
+
+    var set_css = function () {
+        switch ($scope.nowTab) {
+            case 'myProducts':
+                $scope.myProductsCss = $scope.tab_css[0];
+                $scope.myInformationCss = $scope.myCollectCss = $scope.myNewsCss = $scope.tab_css[1];
+                break;
+            case 'myInformation':
+                $scope.myInformationCss = $scope.tab_css[0];
+                $scope.myProductsCss = $scope.myCollectCss = $scope.myNewsCss = $scope.tab_css[1];
+                break;
+            case 'myCollect':
+                $scope.myCollectCss = $scope.tab_css[0];
+                $scope.myProductsCss = $scope.myInformationCss = $scope.myNewsCss = $scope.tab_css[1];
+                break;
+            case 'myNews':
+                $scope.myNewsCss = $scope.tab_css[0];
+                $scope.myProductsCss = $scope.myInformationCss = $scope.myCollectCss = $scope.tab_css[1];
+                break;
+        }
+    };
+    set_css();
+
+    // 设置Tab样式----------------------------------------------------
+
+
+    //  我的发布------------------------------------------------------------------
+
+    // 获取我的发布
+    $scope.getMyProducts = function (page) {
+        Products.products.get({'type': 'my', 'page': page}, function (res) {
+            $scope.myProducts = res.results;
+            $scope.page = Math.ceil(res.count / 4);
+            $scope.myProducspageList = [];
+            for (var i = 1; i <= $scope.page; i++) {
+                $scope.myProducspageList.push([i, {}]);
+            }
+            $scope.setPageCss(page-1, $scope.myProducspageList)
+        })
+    };
+
+    $scope.getMyProducts(1);
+
+    // 上/下架我发布的商品
+    $scope.setProductStatus = function (product, status) {
+        Products.products.update({id: product}, {'status': status}, function (res) {
+            $scope.loginErr = true;
+            $scope.errMessage = status == 1 ? '下架成功！' : '上架成功';
+            $scope.getMyProducts(1);
+        }, function (err) {
+            $scope.loginErr = true;
+            $scope.errMessage = status == 1 ? '下架失败！' : '上架失败';
+        })
+    };
+
+    //  我的发布end------------------------------------------------------------------
+
+
+
+    //  收藏------------------------------------------------------------------
+
     // 获取我收藏的商品
     $scope.getProductCollects = function (page) {
         Products.productscollect.get({'page': page}, function (res) {
             $scope.productCollects = res.results;
             $scope.page = Math.ceil(res.count / 4);
-            $scope.pageList = [];
+            $scope.myCollectspageList = [];
             for (var i = 1; i <= $scope.page; i++) {
-                $scope.pageList.push([i, {}]);
+                $scope.myCollectspageList.push([i, {}]);
             }
-            $scope.setPageCss(page-1)
+            $scope.setPageCss(page-1, $scope.myCollectspageList)
         })
     };
 
     $scope.getProductCollects(1);
-
-    $scope.setPageCss = function (page) {
-        $scope.pageList[page][1] = {"color": "white", "background-color": "#dc3545"}
-    };
-
-    // 分页控制---------------------------------
-
-    //上一页
-    $scope.Previous = function () {
-        if ($scope.selPage == 1) return;
-        $scope.getProductCollects($scope.selPage - 1);
-        $scope.selPage -= 1;
-    };
-    //下一页
-    $scope.Next = function () {
-        if ($scope.selPage == $scope.pageList.length) return;
-        $scope.getProductCollects($scope.selPage + 1);
-        $scope.selPage += 1;
-    };
-
-    $scope.getPageData = function (page) {
-        $scope.selPage = page;
-        $scope.getProductCollects(page);
-    };
-
-    // 分页控制---------------------------------
-
 
     // 取消收藏
     $scope.cancelCollect = function (product) {
@@ -271,6 +425,48 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             $scope.loginErr = true;
             $scope.errMessage = '取消失败！';
         })
-    }
+    };
+
+    //  收藏end------------------------------------------------------------------
+
+    $scope.setPageCss = function (page, item) {
+        item[page][1] = {"color": "white", "background-color": "#dc3545"}
+    };
+
+    // 分页控制---------------------------------
+
+    //上一页
+    $scope.Previous = function (item) {
+        if ($scope.selPage == 1) return;
+        switch (item){
+            case 'collect':
+                $scope.getProductCollects($scope.selPage - 1);
+                break;
+            case 'myProducts':
+                $scope.getMyProducts($scope.selPage - 1);
+        }
+
+        $scope.selPage -= 1;
+    };
+    //下一页
+    $scope.Next = function (item) {
+        if ($scope.selPage == $scope.pageList.length) return;
+        switch (item){
+            case 'collect':
+                $scope.getProductCollects($scope.selPage - 1);
+                break;
+            case 'myProducts':
+                $scope.getMyProducts($scope.selPage - 1);
+        }
+        $scope.selPage += 1;
+    };
+
+    $scope.getPageData = function (page) {
+        $scope.selPage = page;
+        $scope.getProductCollects(page);
+    };
+
+    // 分页控制end---------------------------------
+
 
 });

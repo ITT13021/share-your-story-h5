@@ -55,6 +55,10 @@
         });
     });
 </script>
+<div id="append" class="alert alert-danger alert-dismissable fade show" style="text-align: center;margin-right: 20px" ng-if="loginErr">
+    <button type="button" class="close" ng-click="closeLoginErr()">&times;</button>
+    <span style="font-size: 15px"><strong>{{errMessage}}</strong></span>
+</div>
 <!--顶部公用-->
 <div class="header">
     <!--顶部导航-->
@@ -108,12 +112,15 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="搜你想搜!">
+                                <input type="text" class="form-control" placeholder="搜你享搜!">
                                 <span class="input-group-btn">
                                     <button class="btn btn-danger" type="button" style="height: 53.08px;width: 58px">
                                         搜索
                                     </button>
                                 </span>
+                                <div style="margin-left: 50px">
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#addedProduct" style="float: right;width: 100px;height: 53px">分享记忆</button>
+                                </div>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                     </div><!-- /.row -->
@@ -742,15 +749,15 @@
 <!--下拉搜索-->
 <div id="nav" class="search_fixed">
     <div class="w1200">
-        <div class="s_fixed_l"><img src="../image/search_logo.png" style="height: 40px; margin: 2px 0 0 50px"/></div>
+        <div class="s_fixed_l"><img src="../image/search_logo.png" style="width: 100px;height: 100px;margin-top: -25px;margin-left: 20px"/></div>
         <div class="s_fixed_r">
             <form action="" method="post">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="搜你想搜!" style="height: 35.08px;width: 600px">
+                    <input type="text" class="form-control" placeholder="搜你享搜!" style="height: 35.08px;width: 600px">
                     <span class="input-group-btn">
-                        <button class="btn btn-danger" type="button" style="height: 37.08px;width: 80px">
+                        <span style="font-size: 20px; line-height: 35px; margin-left: 10px; color: white">
                             搜索
-                        </button>
+                        </span>
                     </span>
                 </div>
             </form>
@@ -868,3 +875,95 @@
     </div>
 </div>
 <!--右侧导航-->
+
+
+<!-- 模态框 -->
+<div class="modal fade" id="addedProduct">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">分享记忆</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <!--省份-->
+                <div style="height: 50px;">
+                    <span>（必填）</span>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="width: 190px;height: 38px;float: left;margin-right: 20px">
+                            {{selectedProvince.name}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" ng-click="selectProvince(province)" ng-repeat="province in provinceList">{{province.name}}</a>
+                        </div>
+                    </div>
+                    <div class="dropdown" ng-if="selectedProvince.id">
+                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="width: 190px;height: 38px;float: left;margin-right: 20px">
+                            {{selectedCity.name}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" ng-click="selectCity(city)" ng-repeat="city in cityList">{{city.name}}</a>
+                        </div>
+                    </div>
+                    <div class="dropdown" ng-if="selectedCity.id">
+                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="width: 190px;height: 38px;float: left;margin-right: 20px">
+                            {{selectedSchool.schoolname}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" ng-click="selectSchool(school)" ng-repeat="school in schoolList">{{school.schoolname}}</a>
+                        </div>
+                    </div>
+                </div>
+                <!--商品名称-->
+                <div style="margin-top: 20px">
+                    <div class="form-group">
+                        <label class="input-label">商品名称</label>
+                        <div class="labe-input"><input placeholder="请输入商品名称（必填）" type="text" ng-model="productName"></div>
+                    </div>
+                </div>
+                <!--商品故事-->
+                <div>
+                    <div class="card  form-group">
+                        <label class="card-header">商品故事</label>
+                        <textarea class="card-body form-control" rows="5" id="comment" ng-model="productDescription"></textarea>
+                    </div>
+                </div>
+                <!--商品价格-->
+                <div>
+                    <div class="form-group" style="width: 35%; margin: 0">
+                        <label class="input-label">价格</label>
+                        <div class="labe-input"><input placeholder="请输入商品价格（必填）" type="number" ng-model="productPrice"></div>
+                    </div>
+                    <div class="form-group" style="width: 35%;height: 38px;float: right;margin-top: -38px;margin-right: 150px">
+                        <label class="input-label">原价</label>
+                        <div class="labe-input"><input placeholder="请输入商品原价" type="number" ng-model="productBuyPrice"></div>
+                    </div>
+                </div>
+                <!--商品分类-->
+                <div style="margin-top: 20px">
+                    <span>（必填）</span>
+                    <div class="form-group">
+                        <label class="input-label">分类</label>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="width: 190px;height: 38px;float: left">
+                                {{selectedClassification.name}}
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" ng-click="selectClassification(classification)" ng-repeat="classification in productClassificationList">{{classification.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" style="width: 58px; height: 38px" ng-click="addProduct()" data-title="消息" data-toggle="addProductpopover" data-trigger="focus" data-placement="left" data-content="发送失败！">发布</button>
+            </div>
+
+        </div>
+    </div>
+</div>
