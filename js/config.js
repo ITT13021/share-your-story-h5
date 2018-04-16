@@ -35,9 +35,9 @@ shareStoryApp.config(['$routeProvider','$stateProvider', '$urlRouterProvider', '
     $httpProvider.interceptors.push(function ($cookies) {
         return {
             'request': function (config) {
-                var user_token = $cookies.get("token");
-                if (user_token) {
-                    config.headers['authorization'] = 'Token ' + user_token;
+                var user = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
+                if (user) {
+                    config.headers['authorization'] = 'Token ' + user.token;
                 }
                 config.timeout = 60000;
                 return config;

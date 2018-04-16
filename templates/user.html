@@ -130,6 +130,30 @@
             </div>
         </div>
 
+        <!--我的资料-->
+        <div class="uc_c_right" ng-if="nowTab == 'myInformation'">
+            <div class="order_tips">
+                <ul>
+                    <li>
+                        <div class="d_h2"><h2><span></span>我的资料</h2></div>
+                    </li>
+                </ul>
+            </div>
+            <div style="width:100%;height: 358px">
+                <img class="card-img-top" src="http://static.runoob.com/images/mix/img_avatar.png" alt="Card image" style="width: 200px;height: 200px;margin: 80px 0 0 100px">
+                <div style="float: right;width: 500px;margin-top: 80px">
+                    <ul>
+                        <li><p><label>{{user.username}}</label> <label style="margin-left: 100px" ng-if="user.sex==0">这个人的性别很神秘！</label><label style="margin-left: 100px" ng-if="user.sex!=0">{{user.sex}}</label></p></li>
+                        <li><p><label>{{user.school}}</label></p></li>
+                        <li><p><label>{{user.cellphone}}</label></p></li>
+                        <li><p><label ng-if="user.signature">{{user.signature}}</label><label ng-if="!user.signature">我的个性就是不写个性签名~~</label></p></li>
+                        <li><button class="btn btn-danger" type="button" style="height: 30px;width: 200px;font-size: 10px">编辑</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
         <!--我的发布-->
         <div class="uc_c_right" ng-if="nowTab == 'myProducts'">
             <div class="order_tips">
@@ -141,7 +165,7 @@
             </div>
 
             <!--“我的发布” 表格-->
-            <div class="table-responsive" ng-if="productCollects" ng-cloak>
+            <div class="table-responsive" ng-if="myProducts.length>0" ng-cloak>
                 <table class="table table-hover">
                     <thead class="thead-light">
                     <tr>
@@ -174,7 +198,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="seufe" ng-show="!myProducts" ng-cloak>
+            <div class="seufe" ng-show="myProducts.length==0" ng-cloak>
                 <div class="detail_l_con4">
                     <div class="no_data"><img src="./image/no_data.png"><span>您还没有发布任何商品!</span></div>
                 </div>
@@ -192,7 +216,7 @@
             </div>
 
             <!--“我的收藏” 表格-->
-            <div class="table-responsive" ng-if="productCollects" ng-cloak>
+            <div class="table-responsive" ng-if="productCollects.length>0" ng-cloak>
                 <table class="table table-hover">
                     <thead class="thead-light">
                     <tr>
@@ -221,7 +245,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="seufe" ng-show="!productCollects" ng-cloak>
+            <div class="seufe" ng-show="productCollects.length==0">
                 <div class="detail_l_con4">
                     <div class="no_data"><img src="./image/no_data.png"><span>您还没有收藏任何商品!</span></div>
                 </div>

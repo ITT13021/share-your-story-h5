@@ -1,5 +1,5 @@
 shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state, $cookies) {
-    if ($cookies.get("token")) $state.go('home');
+    if ($cookies.get('user')) $state.go('home');
     $scope.username = $rootScope.user ? $rootScope.user.username : '';
     $scope.password = $rootScope.user ? $rootScope.user.password : '';
     // 关闭错误提示
@@ -11,12 +11,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.login = function () {
         if ($scope.username && $scope.password) {
             User.login.save({'username': $scope.username, 'password': $scope.password}, function (res) {
-                $rootScope.user = {};
-                $rootScope.user.username = $scope.username;
-                $rootScope.user.token = res.token;
-                $cookies.put("token", res.token);
                 $cookies.put("user", res.user);
-                $cookies.put("username", $scope.username);
                 $state.go('home')
             }, function (err) {
                 $scope.loginErr = true;
@@ -97,13 +92,12 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     };
 
     // 获取用户相关信息
-    $scope.user_token = $cookies.get("token");
-    $scope.username = $cookies.get("username");
+    $scope.user = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
 
     // 登出
     $scope.logOut = function () {
-        $cookies.remove("token");
-        $scope.user_token = '';
+        $cookies.remove("user");
+        $scope.user = {};
         $scope.getProducts();
     };
 
@@ -143,6 +137,20 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     // 模态窗发布商品---------------------------------------
 
+    $scope.shareMemory = function () {
+        if(!$scope.user_token){
+            var model = $('[data-toggle="sharememorypopover"]');
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000);
+            return
+        }
+        $('#addedProduct').modal('show');
+        $scope.getProvince();
+        $scope.getProductClassification()
+    };
+
     // 获取省份、城市、学校
     $scope.getProvince = function () {
         User.province.get(function (res) {
@@ -162,8 +170,6 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         })
     };
 
-    $scope.getProvince();
-
     $scope.selectProvince = function (province) {
         $scope.selectedProvince = province;
         $scope.getCity(province.id);
@@ -179,9 +185,11 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     };
 
     // 获取商品分类
-    Products.productsclassification.get(function (res) {
-        $scope.productClassificationList = res.results;
-    });
+    $scope.getProductClassification = function(){
+        Products.productsclassification.get(function (res) {
+            $scope.productClassificationList = res.results;
+        });
+    };
 
     $scope.selectClassification = function (classification) {
         $scope.selectedClassification = classification
@@ -239,9 +247,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     });
 
     // 获取用户相关信息和产品内容
-    $scope.user_token = $cookies.get("token");
-    $scope.user = JSON.parse($cookies.get('user'));
-    $scope.username = $cookies.get("username");
+    $scope.user = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
     $scope.product = JSON.parse($cookies.get("product"));
 
     // 登录或注册
@@ -328,13 +334,36 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.logOut = function () {
         $cookies.remove("token");
         $scope.user_token = '';
-        $scope.getProducts();
     };
 
-    $scope.getTabContent = function (item) {
-        $scope.nowTab = item;
-        set_css();
+    //  我的发布------------------------------------------------------------------
+
+    // 获取我的发布
+    $scope.getMyProducts = function (page) {
+        Products.products.get({'type': 'my', 'page': page}, function (res) {
+            $scope.myProducts = res.results;
+            $scope.page = Math.ceil(res.count / 4);
+            $scope.myProducspageList = [];
+            for (var i = 1; i <= $scope.page; i++) {
+                $scope.myProducspageList.push([i, {}]);
+            }
+            if($scope.myProducspageList[0]) $scope.setPageCss(page-1, $scope.myProducspageList)
+        })
     };
+
+    // 上/下架我发布的商品
+    $scope.setProductStatus = function (product, status) {
+        Products.products.update({id: product}, {'status': status}, function (res) {
+            $scope.loginErr = true;
+            $scope.errMessage = status == 1 ? '下架成功！' : '上架成功';
+            $scope.getMyProducts(1);
+        }, function (err) {
+            $scope.loginErr = true;
+            $scope.errMessage = status == 1 ? '下架失败！' : '上架失败';
+        })
+    };
+
+    //  我的发布end------------------------------------------------------------------
 
     // 设置Tab样式----------------------------------------------------
 
@@ -360,43 +389,31 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
                 break;
         }
     };
-    set_css();
 
     // 设置Tab样式----------------------------------------------------
 
-
-    //  我的发布------------------------------------------------------------------
-
-    // 获取我的发布
-    $scope.getMyProducts = function (page) {
-        Products.products.get({'type': 'my', 'page': page}, function (res) {
-            $scope.myProducts = res.results;
-            $scope.page = Math.ceil(res.count / 4);
-            $scope.myProducspageList = [];
-            for (var i = 1; i <= $scope.page; i++) {
-                $scope.myProducspageList.push([i, {}]);
-            }
-            $scope.setPageCss(page-1, $scope.myProducspageList)
-        })
+    $scope.getTabContent = function (item) {
+        $scope.nowTab = item;
+        switch (item){
+            case 'myProducts':
+                $scope.getMyProducts(1);
+                break;
+            case 'myInformation':
+                $scope.myInformationCss = $scope.tab_css[0];
+                $scope.myProductsCss = $scope.myCollectCss = $scope.myNewsCss = $scope.tab_css[1];
+                break;
+            case 'myCollect':
+                $scope.getProductCollects(1);
+                break;
+            case 'myNews':
+                $scope.myNewsCss = $scope.tab_css[0];
+                $scope.myProductsCss = $scope.myInformationCss = $scope.myCollectCss = $scope.tab_css[1];
+                break;
+        }
+        set_css();
     };
 
-    $scope.getMyProducts(1);
-
-    // 上/下架我发布的商品
-    $scope.setProductStatus = function (product, status) {
-        Products.products.update({id: product}, {'status': status}, function (res) {
-            $scope.loginErr = true;
-            $scope.errMessage = status == 1 ? '下架成功！' : '上架成功';
-            $scope.getMyProducts(1);
-        }, function (err) {
-            $scope.loginErr = true;
-            $scope.errMessage = status == 1 ? '下架失败！' : '上架失败';
-        })
-    };
-
-    //  我的发布end------------------------------------------------------------------
-
-
+    $scope.getTabContent($scope.nowTab);
 
     //  收藏------------------------------------------------------------------
 
@@ -409,11 +426,9 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             for (var i = 1; i <= $scope.page; i++) {
                 $scope.myCollectspageList.push([i, {}]);
             }
-            $scope.setPageCss(page-1, $scope.myCollectspageList)
+            if($scope.myCollectspageList[0]) $scope.setPageCss(page-1, $scope.myCollectspageList)
         })
     };
-
-    $scope.getProductCollects(1);
 
     // 取消收藏
     $scope.cancelCollect = function (product) {

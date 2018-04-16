@@ -65,15 +65,15 @@
     <div class="header_top">
         <div class="w1200">
             <div class="h_t_l">
-                <div class="login_l" ng-if="!user_token">
+                <div class="login_l" ng-if="!user.token">
                     <span>欢迎来到享忆!</span>
                     <a class="a_login" href="#!/login">[登录]</a>
                     <span class="line"></span>
                     <a class="" href="#!/register">[注册]</a>
                 </div>
-                <div class="login_l" ng-if="user_token">
+                <div class="login_l" ng-if="user.token">
                     <span>欢迎来到享忆!</span>
-                    <span>{{username}}</span>
+                    <span>{{user.username}}</span>
                     <span ng-click="logOut()" style="cursor: pointer"> <strong>[登出]</strong></span>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                                     </button>
                                 </span>
                                 <div style="margin-left: 50px">
-                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#addedProduct" style="float: right;width: 100px;height: 53px">分享记忆</button>
+                                    <button type="button" class="btn btn-outline-danger" ng-click="shareMemory()" style="float: right;width: 100px;height: 53px" data-title="消息" data-toggle="sharememorypopover" data-trigger="focus" data-placement="bottom" data-content="您还没有登录呢！">分享记忆</button>
                                 </div>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->

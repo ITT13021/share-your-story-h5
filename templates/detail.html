@@ -18,15 +18,15 @@
     <div class="header_top">
         <div class="w1200">
             <div class="h_t_l">
-                <div class="login_l" ng-if="!user_token">
+                <div class="login_l" ng-if="!user.token">
                     <span>欢迎来到享忆!</span>
                     <a class="a_login" href="#!/login">[登录]</a>
                     <span class="line"></span>
                     <a class="" href="#!/register">[注册]</a>
                 </div>
-                <div class="login_l" ng-if="user_token">
+                <div class="login_l" ng-if="user.token">
                     <span>欢迎来到享忆!</span>
-                    <span>{{username}}</span>
+                    <span>{{user.username}}</span>
                     <span ng-click="logOut()" style="cursor: pointer"> <strong>[登出]</strong></span>
                 </div>
             </div>
@@ -146,13 +146,13 @@
                         <div class="d_h2">
                             <h2>用户留言</h2>
                         </div>
-                        <div style="height: 200px" ng-if="!user_token">
+                        <div style="height: 200px" ng-if="!user.token">
                             <div class="message_login">
                                 <button type="button" class="btn btn-outline-danger" style="width: 70px;height: 40px;" ng-click="registerOrLogin('login')">登录</button>
                                 <button type="button" class="btn btn-outline-success" style="width: 70px;height: 40px;" ng-click="registerOrLogin('register')">注册</button>
                             </div>
                         </div>
-                        <div class="detail_l_con3 " ng-if="user_token">
+                        <div class="detail_l_con3 " ng-if="user.token">
                             <textarea id="message" ng-style="want" ng-model="message.message" class="product_message_textarea" cols="30" rows="10" placeholder="请输入留言内容" maxlength="180"></textarea>
                             <div style="float: right;margin-top: 30px">
                                 <button data-title="消息" data-toggle="messagepopover" data-trigger="focus" data-placement="left" data-content="发送成功！" type="button" class="btn btn-outline-danger" style="width: 70px;height: 40px;" ng-click="uploadMessage()">提交</button>
