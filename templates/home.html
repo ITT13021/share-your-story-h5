@@ -79,7 +79,7 @@
             </div>
             <div class="h_t_r">
                 <ul>
-                    <li>
+                    <li ng-if="user.token">
                         <a href="#!/user">我的享忆</a>
                         <span class="line"></span>
                     </li>
@@ -130,75 +130,41 @@
     </div>
     <!--菜单-->
     <div class="full_nav">
-        <div class="w1200">
-            <ul class="nav">
-                <li class="li_all_type">
-                    <a href="">全部分类</a>
-                </li>
-            </ul>
-        </div>
+        <div class="w1200"></div>
     </div>
 </div>
 <!--头部end-->
 <!--轮播区域-->
-<div class="full_big_eye" style="margin-top: 141px">
-    <!--菜单-->
-    <div class="index_type">
-        <ul class="index_type_ul">
-            <li>
-                <span>书籍<b>></b></span>
-            </li>
-            <li>
-                <span>电器<b>></b></span>
-            </li>
-            <li>
-                <span>其他<b>></b></span>
-            </li>
+<div class="full_big_eye" style="margin-top: 141px;margin-bottom: 150px">
+    <div class="home_menu_title"><h5>商品分类</h5></div>
+    <div class="home_menu">
+        <ul>
+            <li ng-repeat="classification in productClassificationList" ng-click="goToClassification(classification)">{{classification.name}}</li>
         </ul>
     </div>
-    <!--菜单-->
-    <!--轮播图-->
-    <div class="full_eye">
-        <div id="inBaner">
-            <ul class="big_eye_pic">
-                <li style="display: block;">
-                    <a href="" class="img_box">
-                        <img src="./image/web-101-101-1.jpg"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="tpl">
-                        <img src="./image/web-101-101-2.jpg" style="margin-left: 400px"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="tpl">
-                        <img src="./image/web-101-101-3.jpg" style="margin-left: 400px"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="tpl">
-                        <img src="./image/web-101-101-4.jpg" style="margin-left: 400px"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="tpl">
-                        <img src="./image/web-101-101-5.jpg" style="margin-left: 400px"/>
-                    </a>
-                </li>
-            </ul>
-            <div class="btn">
-                <ul>
-                    <li class="cur"></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- 指示符 -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+
+        <!-- 轮播图片 -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../image/home_menu_1.jpg" style="width: 100%">
+            </div>
+            <div class="carousel-item">
+                <img src="../image/home_menu_1.jpg" style="width: 100%">
+            </div>
+            <div class="carousel-item">
+                <img src="http://static.runoob.com/images/mix/img_mountains_wide.jpg" style="width: 100%">
             </div>
         </div>
+
     </div>
-    <!--轮播图-->
 </div>
 <!--轮播区域-->
 <!--商品区-->
@@ -245,6 +211,7 @@
         </div>
     </div>
     <!--&lt;!&ndash;第四区&ndash;&gt;-->
+    <div id="book" style="height: 40px"></div>
     <div class="day_box">
         <div class="qinha_title">
             <div class="v_h2">
@@ -411,6 +378,8 @@
             </li>
         </ul>
     </div>
+
+    <div id="electric" style="height: 40px"></div>
     <div class="day_box">
         <div class="qinha_title">
             <div class="v_h2">
@@ -577,6 +546,7 @@
             </li>
         </ul>
     </div>
+    <div id="another" style="height: 40px"></div>
     <div class="day_box">
         <div class="qinha_title">
             <div class="v_h2">
@@ -849,7 +819,7 @@
 <!--底部end-->
 <!--右侧导航-->
 <div class="fixed_dh">
-    <div class="f_r_top">
+    <div class="f_r_top" ng-if="user.token">
         <div class="top_i">
             <i class="icon_user"></i>
             <span>账号</span>

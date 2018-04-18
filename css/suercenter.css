@@ -2,6 +2,14 @@
 body{
 	background-color: #fff;
 }
+
+.user-news-list>a:hover{
+    background-color: #ececf6;
+    font-size: 14px;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
 /*欢迎页*/
 .uc_top {
     background-color: #f23856;

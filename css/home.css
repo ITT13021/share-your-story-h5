@@ -19,6 +19,52 @@ ul li{
  * 分类
  */
 
+/*用户*/
+.edit-my-info li{
+    margin-bottom: 15px;
+}
+
+.home_menu_title{
+    width: 150px;
+    margin-bottom: -10px;
+    background-color: #94193f;
+    color: white;
+}
+
+.home_menu_title>h5{
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px
+}
+
+.home_menu{
+    position: absolute;
+    z-index: 4;
+    width: 150px;
+    height: 420px
+}
+
+.home_menu ul{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(56, 55, 55, 0.55);
+    color: white
+}
+
+.home_menu ul>li{
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.home_menu ul>li:hover{
+    background-color: white;
+    color: #dc3545;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 .input-label{
     float: left;
     height: 38px;
@@ -45,8 +91,9 @@ ul li{
 }
 
 .full_big_eye {
-    width: 100%;
+    width: 1200px;
     height: 380px;
+    margin: auto;
     position: relative;
 }
 .index_type {

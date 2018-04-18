@@ -22,13 +22,13 @@
     <div class="header_top">
         <div class="w1200">
             <div class="h_t_l">
-                <div class="login_l" ng-if="!user_token">
+                <div class="login_l" ng-if="!user.token">
                     <span>欢迎来到享忆!</span>
                     <a class="a_login" href="#!/login">[登录]</a>
                     <span class="line"></span>
                     <a class="" href="#!/register">[注册]</a>
                 </div>
-                <div class="login_l" ng-if="user_token">
+                <div class="login_l" ng-if="user.token">
                     <span>欢迎来到享忆!</span>
                     <span>{{user.username}}</span>
                     <span ng-click="logOut()" style="cursor: pointer"> <strong>[登出]</strong></span>
@@ -142,17 +142,75 @@
             <div style="width:100%;height: 358px">
                 <img class="card-img-top" src="http://static.runoob.com/images/mix/img_avatar.png" alt="Card image" style="width: 200px;height: 200px;margin: 80px 0 0 100px">
                 <div style="float: right;width: 500px;margin-top: 80px">
-                    <ul>
-                        <li><p><label>{{user.username}}</label> <label style="margin-left: 100px" ng-if="user.sex==0">这个人的性别很神秘！</label><label style="margin-left: 100px" ng-if="user.sex!=0">{{user.sex}}</label></p></li>
+                    <ul ng-if="!editMy">
+                        <li>
+                            <p>
+                                <label>{{user.username}}</label>
+                                <label style="margin-left: 100px" ng-if="user.sex==0">这个人的性别很神秘！</label>
+                                <label style="margin-left: 100px" ng-if="user.sex==1">我是男生</label>
+                                <label style="margin-left: 100px" ng-if="user.sex==2">我是女生</label>
+                            </p>
+                        </li>
                         <li><p><label>{{user.school}}</label></p></li>
                         <li><p><label>{{user.cellphone}}</label></p></li>
                         <li><p><label ng-if="user.signature">{{user.signature}}</label><label ng-if="!user.signature">我的个性就是不写个性签名~~</label></p></li>
-                        <li><button class="btn btn-danger" type="button" style="height: 30px;width: 200px;font-size: 10px">编辑</button></li>
+                        <li>
+                            <button class="btn btn-outline-danger" type="button" style="height: 30px;width: 200px;font-size: 10px" ng-click="editMyInformation()">编辑</button>
+                        </li>
+                    </ul>
+                    <ul ng-if="editMy" class="edit-my-info">
+                        <li>
+                            <p>
+                                <input maxlength="15" type="text" class="form-control" style="width: 150px;display: inline-block" ng-model="user.username"/>
+                                <input type="number"  maxlength="11" class="form-control" placeholder="请输入手机号" style="width: 150px;margin-right: 140px;float: right" ng-model="user.cellphone" />
+                            </p>
+                        </li>
+                        <li>
+                            <form>
+                                <label class="radio-inline" style="margin-right: 10px"><input type="radio" name="optradio" ng-checked="user.sex==0" onChange="angular.element(this).scope().changeSex('s')">&nbsp;我要保密</label>
+                                <label class="radio-inline" style="margin-right: 10px"><input type="radio" name="optradio" ng-checked="user.sex==2" onChange="angular.element(this).scope().changeSex('g')">&nbsp;我是女生</label>
+                                <label class="radio-inline"><input type="radio" name="optradio" ng-checked="user.sex==1" onChange="angular.element(this).scope().changeSex('b')">&nbsp;我是男生</label>
+                            </form>
+                        </li>
+                        <li style="width: 100%; height: 45px">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="max-width: 120px;height: 38px;float: left;margin-right: 20px">
+                                    {{selectedProvince.name}}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" ng-click="selectProvince(province)" ng-repeat="province in provinceList">{{province.name}}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown" ng-if="selectedProvince.id">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="max-width: 120px;height: 38px;float: left;margin-right: 20px">
+                                    {{selectedCity.name}}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" ng-click="selectCity(city)" ng-repeat="city in cityList">{{city.name}}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown" ng-if="selectedCity.id">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="width: 150px;max-width: 200px;height: 38px;float: left;margin-right: 20px">
+                                    {{selectedSchool.schoolname}}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" ng-click="selectSchool(school)" ng-repeat="school in schoolList">{{school.schoolname}}</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p>
+                                <textarea maxlength="28" class="form-control" cols="20" rows="2" placeholder="我的个性就是不填个性签名~~" style="width: 450px;resize:none" ng-model="user.signature"></textarea>
+                            </p>
+                        </li>
+                        <li>
+                            <button ng-if="!editMy" class="btn btn-outline-danger" type="button" style="height: 30px;width: 200px;font-size: 10px" ng-click="editMyInformation()">编辑</button>
+                            <button ng-if="editMy" class="btn btn-outline-danger" type="button" style="height: 30px;width: 200px;font-size: 10px" ng-click="updateMyInformation()">完成</button>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-
 
         <!--我的发布-->
         <div class="uc_c_right" ng-if="nowTab == 'myProducts'">
@@ -248,6 +306,38 @@
             <div class="seufe" ng-show="productCollects.length==0">
                 <div class="detail_l_con4">
                     <div class="no_data"><img src="./image/no_data.png"><span>您还没有收藏任何商品!</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!--我的消息-->
+        <div class="uc_c_right" ng-if="nowTab == 'myNews'">
+            <div class="order_tips">
+                <ul>
+                    <li>
+                        <div class="d_h2"><h2><span></span>我的消息</h2></div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="list-group user-news-list" ng-if="!newsDetail.title">
+                    <a class="list-group-item list-group-item-light" ng-repeat="new in myNews" ng-click="getNewsDetail(new)">{{new.title}}</a>
+                </div>
+                <div ng-if="newsDetail.title">
+                    <div class="card" style="height: 356px;border: none">
+                        <a ng-click="newDeatilBack()" class="card-link" style="font-size: 15px;padding: 10px 0 0 10px;color: #00b3ee;cursor: pointer">返回</a>
+                        <div class="card-body" style="text-align: center">
+                            <h4 class="card-title">{{newsDetail.title}}</h4>
+                            <p class="card-text" style="padding-top: 50px">{{newsDetail.content}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="myNewList.length>1">
+                    <ul class="pagination" style="float: right;margin-right: 110px;margin-top: 21px">
+                        <li class="page-item" ng-click="Previous('news')"><a class="page-link">Previous</a></li>
+                        <li class="page-item" ng-repeat="i in myNewList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-click="Next('news')"><a class="page-link">Next</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
