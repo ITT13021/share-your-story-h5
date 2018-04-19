@@ -24,8 +24,15 @@ shareStoryApp.config(['$routeProvider','$stateProvider', '$urlRouterProvider', '
     })
     .state('user', {
         url: '/user',
+        params:{'tab': null},
         templateUrl: '../templates/user.html',
         controller: 'UserCtrl'
+    })
+    .state('products', {
+        url: '/products',
+        params:{'searchContent': null, 'searchClassification': null},
+        templateUrl: '../templates/products.html',
+        controller: 'ProductsCtrl'
     })
     .state('otherwise', {
         url: '/otherwise',

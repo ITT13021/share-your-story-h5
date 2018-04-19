@@ -19,6 +19,31 @@ ul li{
  * 分类
  */
 
+/*产品*/
+.top-search input{
+    height: 53.08px;
+    width: 300px
+}
+
+.top-search ul{
+    position: absolute;
+    z-index: 1000;
+    width: 300px;
+    background-color: white;
+    border: 1px solid gainsboro
+}
+
+.top-search ul>li{
+    height: 25px;
+    line-height: 25px
+}
+
+.top-search ul>li:hover{
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+}
+
 /*用户*/
 .edit-my-info li{
     margin-bottom: 15px;

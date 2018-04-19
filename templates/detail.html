@@ -4,7 +4,6 @@
         $(window).scroll(function () {
             //获得滚动条距离顶部距离
             var t = $(document).scrollTop();
-            document.title = t;
             if (t > 100) {
                 $("#nav").show();
             } else {
@@ -32,7 +31,7 @@
             </div>
             <div class="h_t_r">
                 <ul>
-                    <li>
+                    <li ng-if="user.token">
                         <a href="#!/user">我的享忆</a>
                         <span class="line"></span>
                     </li>
@@ -83,6 +82,7 @@
     <!--分类导航-->
     <div class="top_nv"></div>
     <!--分类导航-->
+
     <div class="con_content">
         <!--提交区域-->
         <div class="con_top">
@@ -124,7 +124,7 @@
                         </div>
                         <div class="model_wrap">
                             <div class="model_submilt">
-                                <button type="button" class="btn btn-outline-danger" style="width: 150px;height: 40px;" ng-click="iWant()">我想要</button>
+                                <button type="button" class="btn btn-outline-danger" style="width: 150px;height: 40px;" ng-click="iWant()" data-title="消息" data-toggle="wantpopover" data-trigger="focus" data-placement="right" data-content="您还没登录呢！">我想要</button>
                             </div>
                         </div>
                     </div>
@@ -181,6 +181,7 @@
         </div>
     </div>
     <!--商品故事end-->
+
     <!--下拉搜索-->
     <div id="nav" class="search_fixed">
         <div class="w1200">
@@ -200,6 +201,7 @@
         </div>
     </div>
     <!--下拉搜索end-->
+
     <!--底部公用-->
     <div class="footer">
         <!--<div class="footer_b w1200"><img src="./image/foot_img1.jpg"/></div>-->
@@ -282,10 +284,11 @@
         </div>
     </div>
     <!--底部end-->
+
     <!--右侧导航-->
     <div class="fixed_dh">
-        <div class="f_r_top">
-            <div class="top_i">
+        <div class="f_r_top" ng-if="user.token">
+            <div class="top_i" ng-click="goUser('myInformation')">
                 <i class="icon_user"></i>
                 <span>账号</span>
             </div>
@@ -293,7 +296,7 @@
                 <p class="f_line1"></p>
                 <p class="f_line2"></p>
             </div>
-            <div class="top_i">
+            <div class="top_i" ng-click="goUser('myCollect')">
                 <i class="icon_collect"></i>
                 <span>收藏</span>
             </div>

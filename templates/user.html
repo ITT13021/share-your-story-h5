@@ -1,10 +1,10 @@
 <script type="text/javascript">
     $(function () {
+        document.title = '享忆-用户';
         //搜索框下滑
         $(window).scroll(function () {
             //获得滚动条距离顶部距离
             var t = $(document).scrollTop();
-            document.title = t;
             if (t > 100) {
                 $("#nav").show();
             } else {

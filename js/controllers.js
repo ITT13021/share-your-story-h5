@@ -51,6 +51,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
 })
 .controller('HomeCtrl', function ($scope, User, $state, $rootScope, $cookies, Products) {
+    $state.go('home');
     console.log('\n' +
         '                   _ooOoo_\n' +
         '                  o8888888o\n' +
@@ -85,6 +86,21 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.productBuyPrice = null;
     $scope.productDescription = null;
     $scope.productName = null;
+    $scope.searchContent = '';
+    $scope.searchList = {"display": "none"};
+    $scope.bookProducts = [];
+    $scope.electricProducts = [];
+    $scope.otherProducts = [];
+
+    $scope.$watch('searchContent', function (newVal) {
+        if ($scope.searchContent != '') $scope.searchList = {};
+        else $scope.searchList = {"display": "none"};
+    });
+
+    $scope.search = function (classification) {
+        if ($scope.searchContent == '') return;
+        $state.go('products', {"searchContent": $scope.searchContent, "searchClassification": classification});
+    };
 
     // 关闭错误提示
     $scope.closeLoginErr = function () {
@@ -105,13 +121,16 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.getDifferentImg = function (obj) {
         $scope.number = [];
         while ($scope.number.length <= obj.length) {
-            var number = Math.floor(Math.random() * 10 + 1);
+            var number = Math.floor(Math.random() * 15 + 1);
             if ($scope.number.indexOf(number) == -1) {
                 $scope.number.push(number);
                 for (var i = 0; i < obj.length; i++) {
                     if (!obj[i].hasOwnProperty('img')) {
-                        obj[i].img = "../image/computer/" + number + ".jpg";
-                        break
+                        if (obj[i].name.indexOf('手机') != -1) obj[i].img = "../image/cellphone/" + number + ".jpg";
+                        else if (obj[i].name.indexOf('电脑') != -1) obj[i].img = "../image/computer/" + number + ".jpg";
+                        else if (obj[i].name.indexOf('书籍') != -1) obj[i].img = "../image/book/" + number + ".jpg";
+                        else if (obj[i].name.indexOf('其他') != -1) obj[i].img = "../image/other/" + number + ".jpg";
+                        break;
                     }
                 }
 
@@ -119,16 +138,57 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         }
     };
 
+    // 跳转到分类
+    $scope.goToClassification = function (item) {
+        switch (item.name) {
+            case '书籍':
+                document.getElementById('book').scrollIntoView();
+                break;
+            case '电器':
+                document.getElementById('electric').scrollIntoView();
+                break;
+            case '其他':
+                document.getElementById('another').scrollIntoView();
+                break
+
+        }
+
+    };
+
+    $scope.goUser = function (tab) {
+        $state.go('user', {'tab': tab})
+    };
+
     // 获取产品数据
-    $scope.getProducts = function (type) {
-        Products.products.get({'type': type}, function (res) {
+    $scope.getProducts = function () {
+        Products.products.query({'type': 'home'}, function (res) {
+            $scope.allproducts = res;
+            _.each($scope.allproducts, function (item) {
+                switch (item.classification) {
+                    case 1:
+                        $scope.electricProducts.push(item);
+                        break;
+                    case 2:
+                        $scope.bookProducts.push(item);
+                        break;
+                    case 3:
+                        $scope.otherProducts.push(item);
+                        break
+                }
+            });
+            // 最新推荐电脑图片地址随机生成不重复的
+            $scope.getDifferentImg($scope.electricProducts);
+            $scope.getDifferentImg($scope.bookProducts);
+            $scope.getDifferentImg($scope.otherProducts);
+        });
+        Products.products.get({'type': 'recommend'}, function (res) {
             $scope.products = res.results;
             // 最新推荐电脑图片地址随机生成不重复的
             $scope.getDifferentImg($scope.products);
         });
     };
 
-    $scope.getProducts('recommend');
+    $scope.getProducts();
 
     $scope.goToDetail = function (product) {
         $cookies.put("product", JSON.stringify(product));
@@ -138,7 +198,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     // 模态窗发布商品---------------------------------------
 
     $scope.shareMemory = function () {
-        if(!$scope.user.token){
+        if (!$scope.user.token) {
             var model = $('[data-toggle="sharememorypopover"]');
             model.popover('show');
             setTimeout(function () {
@@ -185,29 +245,12 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     };
 
     // 获取商品分类
-    $scope.getProductClassification = function(){
+    $scope.getProductClassification = function () {
         Products.productsclassification.get(function (res) {
             $scope.productClassificationList = res.results;
         });
     };
-
     $scope.getProductClassification();
-
-    $scope.goToClassification = function (item) {
-        switch (item.name){
-            case '书籍':
-                document.getElementById('book').scrollIntoView();
-                break;
-            case '电器':
-                document.getElementById('electric').scrollIntoView();
-                break;
-            case '其他':
-                document.getElementById('another').scrollIntoView();
-                break
-
-        }
-
-    };
 
     $scope.selectClassification = function (classification) {
         $scope.selectedClassification = classification
@@ -215,7 +258,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     // 发布商品
     $scope.addProduct = function () {
-        if(!$scope.productPrice || !$scope.productName || !$scope.selectedSchool.id || !$scope.selectedClassification.id){
+        if (!$scope.productPrice || !$scope.productName || !$scope.selectedSchool.id || !$scope.selectedClassification.id) {
             var model = $('[data-toggle="addProductpopover"]');
             model[0].dataset.content = "您还有必填项没有填写哦！";
             model.popover('show');
@@ -226,11 +269,11 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         }
         $scope.newProduct = {};
         $scope.newProduct = {"price": $scope.productPrice, "buy_price": $scope.productBuyPrice, "description": $scope.productDescription, "name": $scope.productName, "school": $scope.selectedSchool.id, "classification": $scope.selectedClassification.id};
-        Products.products.save($scope.newProduct,function (res) {
+        Products.products.save($scope.newProduct, function (res) {
             $('#addedProduct').modal('hide');
             $scope.loginErr = true;
             $scope.errMessage = '发布成功！';
-            $scope.getProducts('recommend');
+            $scope.getProducts();
             $scope.selectedProvince = {"id": null, "name": '请选择省份'};
             $scope.selectedCity = {"id": null, "name": '请选择城市'};
             $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
@@ -239,7 +282,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             $scope.productBuyPrice = null;
             $scope.productDescription = null;
             $scope.productName = null;
-        },function (err) {
+        }, function (err) {
             var model = $('[data-toggle="addProductpopover"]');
             model[0].dataset.content = "发布失败，请稍后再试！";
             model.popover('show');
@@ -248,6 +291,8 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             }, 3000)
         })
     }
+
+    // 模态窗发布商品end---------------------------------------
 
 })
 .controller('DetailCtrl', function ($scope, $state, $rootScope, $cookies, Products) {
@@ -276,11 +321,14 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     // 登出
     $scope.logOut = function () {
-        $cookies.remove("token");
-        $scope.user_token = '';
+        $cookies.remove("user");
+        $scope.user = {};
         $scope.getProducts();
     };
 
+    $scope.goUser = function (tab) {
+        $state.go('user', {'tab': tab})
+    };
 
     // 获取产品留言
     $scope.getProductMessage = function () {
@@ -296,7 +344,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         var model = $('[data-toggle="messagepopover"]');
         if ($scope.message.message) {
             Products.productsmessage.save({"product": $scope.product.id, "message": $scope.message.message, "parent_message": $scope.parentMessage}, function (res) {
-                if($scope.want) model[0].dataset.content = "我们已将您的心意发送给对方，用心的人将会被认真对待！";
+                if ($scope.want) model[0].dataset.content = "我们已将您的心意发送给对方，用心的人将会被认真对待！";
                 model.popover('show');
                 $scope.message = {};
                 $scope.getProductMessage();
@@ -310,17 +358,33 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     // ‘我想要’ 函数
     $scope.iWant = function () {
+        var model = $('[data-toggle="wantpopover"]');
+        if (!$scope.user || !$scope.user.token) {
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000);
+            return
+        }
         $scope.want = true;
         document.getElementById('message').focus();
-        window.scrollTo(0,document.getElementById('message').offsetTop-100);
+        window.scrollTo(0, document.getElementById('message').offsetTop - 100);
         $scope.message.message = "I WANT !";
     };
 
     // 收藏
     $scope.collect = function () {
         var model = $('[data-toggle="collectpopover"]');
+        if (!$scope.user || !$scope.user.token) {
+            model[0].dataset.content = "您还没有登录呢！";
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000);
+            return
+        }
         Products.productscollect.save({"product": $scope.product.id, "user": $scope.user.id}, function (res) {
-            if(res.status) model[0].dataset.content = res.msg;
+            if (res.status) model[0].dataset.content = res.msg;
             model.popover('show');
             setTimeout(function () {
                 model.popover('hide')
@@ -334,18 +398,237 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         })
     }
 })
-.controller('UserCtrl', function ($scope, User, $state, $rootScope, $cookies, Products, News) {
+.controller('ProductsCtrl', function ($scope, User, $state, $rootScope, $cookies, Products, $stateParams) {
+    // 声明相关变量
+    $scope.selPage = 1; // 选中页数
+    $scope.productSearchContent = '';
+    $scope.searchList = {"display": "none"};
+
+    $scope.$watch('productSearchContent', function (newVal) {
+        if ($scope.productSearchContent != '') $scope.searchList = {};
+        else $scope.searchList = {"display": "none"};
+    });
+
+    // 获取路由参数
+    $scope.otherSearchContent = $stateParams.searchContent;
+    $scope.searchClassification = $stateParams.searchClassification;
+    $scope.searchTitle = $scope.searchClassification ? $scope.searchClassification.name : '相关内容';
+
+    // 获取用户相关信息和产品内容
+    $scope.user = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
+    $scope.product = JSON.parse($cookies.get("product"));
+
+    // 登录或注册
+    $scope.registerOrLogin = function (page) {
+        $state.go(page)
+    };
+
+    // 登出
+    $scope.logOut = function () {
+        $cookies.remove("user");
+        $scope.user = {};
+        $scope.getProducts();
+    };
+
+    $scope.goUser = function (tab) {
+        $state.go('user', {'tab': tab})
+    };
+
+    // 随机产生n张不同的图片
+    $scope.getDifferentImg = function (obj) {
+        $scope.number = [];
+        while ($scope.number.length <= obj.length) {
+            var number = Math.floor(Math.random() * 15 + 1);
+            if ($scope.number.indexOf(number) == -1) {
+                $scope.number.push(number);
+                for (var i = 0; i < obj.length; i++) {
+                    if (!obj[i].hasOwnProperty('img')) {
+                        if (obj[i].name.indexOf('手机') != -1) obj[i].img = "../image/cellphone/" + number + ".jpg";
+                        else if (obj[i].name.indexOf('电脑') != -1) obj[i].img = "../image/computer/" + number + ".jpg";
+                        else if (obj[i].name.indexOf('书籍') != -1) obj[i].img = "../image/book/" + number + ".jpg";
+                        else if (obj[i].name.indexOf('其他') != -1) obj[i].img = "../image/other/" + number + ".jpg";
+                        break;
+                    }
+                }
+
+            }
+        }
+    };
+
+    // 获取商品分类
+    $scope.getProductClassification = function () {
+        Products.productsclassification.get(function (res) {
+            $scope.productClassificationList = res.results;
+        });
+    };
+    $scope.getProductClassification();
+
+    $scope.search = function (classification) {
+        $scope.searchTitle = classification ? classification.name : '相关内容';
+        if ($scope.productSearchContent == '') return;
+        $scope.getProducts(classification, $scope.productSearchContent);
+    };
+
+    $scope.setPageCss = function (page, item) {
+        item[page][1] = {"color": "white", "background-color": "#dc3545"}
+    };
+
+    // 获取产品数据
+    $scope.getProducts = function (classification, search, page) {
+        Products.products.get({'page': page, 'classification': classification ? classification.id : '', 'search': search}, function (res) {
+            $scope.searchProducts = res.results;
+            $scope.page = Math.ceil(res.count / 10);
+            $scope.searchProducspageList = [];
+            for (var i = 1; i <= $scope.page; i++) {
+                $scope.searchProducspageList.push([i, {}]);
+            }
+            if ($scope.searchProducspageList[0]) $scope.setPageCss(page - 1, $scope.searchProducspageList);
+            $scope.productSearchContent = '';
+            // 最新推荐电脑图片地址随机生成不重复的
+            $scope.getDifferentImg($scope.searchProducts);
+        });
+    };
+
+    $scope.getProducts($scope.searchClassification, $scope.otherSearchContent, 1);
+
+    // 模态窗发布商品---------------------------------------
+
+    $scope.shareMemory = function () {
+        if (!$scope.user.token) {
+            var model = $('[data-toggle="sharememorypopover"]');
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000);
+            return
+        }
+        $('#addedProduct').modal('show');
+        $scope.getProvince();
+        $scope.getProductClassification()
+    };
+
+    // 获取省份、城市、学校
+    $scope.getProvince = function () {
+        User.province.get(function (res) {
+            $scope.provinceList = res.results;
+        })
+    };
+
+    $scope.getCity = function (province) {
+        User.city.get({"province": province}, function (res) {
+            $scope.cityList = res.results;
+        })
+    };
+
+    $scope.getSchool = function (city) {
+        User.school.get({"city": city}, function (res) {
+            $scope.schoolList = res.results;
+        })
+    };
+
+    $scope.selectProvince = function (province) {
+        $scope.selectedProvince = province;
+        $scope.getCity(province.id);
+    };
+
+    $scope.selectCity = function (city) {
+        $scope.selectedCity = city;
+        $scope.getSchool(city.id);
+    };
+
+    $scope.selectSchool = function (school) {
+        $scope.selectedSchool = school;
+    };
+
+    // 获取商品分类
+    $scope.getProductClassification = function () {
+        Products.productsclassification.get(function (res) {
+            $scope.productClassificationList = res.results;
+        });
+    };
+
+    $scope.selectClassification = function (classification) {
+        $scope.selectedClassification = classification
+    };
+
+    // 发布商品
+    $scope.addProduct = function () {
+        if (!$scope.productPrice || !$scope.productName || !$scope.selectedSchool.id || !$scope.selectedClassification.id) {
+            var model = $('[data-toggle="addProductpopover"]');
+            model[0].dataset.content = "您还有必填项没有填写哦！";
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000);
+            return
+        }
+        $scope.newProduct = {};
+        $scope.newProduct = {"price": $scope.productPrice, "buy_price": $scope.productBuyPrice, "description": $scope.productDescription, "name": $scope.productName, "school": $scope.selectedSchool.id, "classification": $scope.selectedClassification.id};
+        Products.products.save($scope.newProduct, function (res) {
+            $('#addedProduct').modal('hide');
+            $scope.loginErr = true;
+            $scope.errMessage = '发布成功！';
+            $scope.getProducts('recommend');
+            $scope.selectedProvince = {"id": null, "name": '请选择省份'};
+            $scope.selectedCity = {"id": null, "name": '请选择城市'};
+            $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
+            $scope.selectedClassification = {"id": null, "name": '请选择分类'};
+            $scope.productPrice = null;
+            $scope.productBuyPrice = null;
+            $scope.productDescription = null;
+            $scope.productName = null;
+        }, function (err) {
+            var model = $('[data-toggle="addProductpopover"]');
+            model[0].dataset.content = "发布失败，请稍后再试！";
+            model.popover('show');
+            setTimeout(function () {
+                model.popover('hide')
+            }, 3000)
+        })
+    };
+
+    // 模态窗发布商品end---------------------------------------
+
+
+    // 分页控制---------------------------------
+
+    //上一页
+    $scope.Previous = function () {
+        if ($scope.selPage == 1) return;
+        $scope.getProducts($scope.searchClassification, $scope.otherSearchContent, $scope.selPage + 1);
+        $scope.selPage -= 1;
+    };
+    //下一页
+    $scope.Next = function () {
+        if ($scope.selPage == $scope.pageList.length) return;
+        $scope.getProducts($scope.searchClassification, $scope.otherSearchContent, $scope.selPage + 1);
+        $scope.selPage += 1;
+    };
+
+    $scope.getPageData = function (page) {
+        $scope.selPage = page;
+        $scope.getProducts($scope.searchClassification, $scope.otherSearchContent, page);
+    };
+
+    // 分页控制end---------------------------------
+
+})
+.controller('UserCtrl', function ($scope, User, $state, $rootScope, $cookies, Products, News, $stateParams) {
+
+    // 声明变量
+    $scope.selPage = 1; // 选中页数
+    $scope.nowTab = 'myInformation';    // 当前所在tab
+    $scope.selectedProvince = {"id": null, "name": '请选择省份'};
+    $scope.selectedCity = {"id": null, "name": '请选择城市'};
+    $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
+
     // 关闭错误提示
     $scope.closeLoginErr = function () {
         $scope.loginErr = !$scope.loginErr;
     };
 
-    // 声明变量
-    $scope.selPage = 1; // 选中页数
-    $scope.nowTab = 'myProducts';    // 当前所在tab
-    $scope.selectedProvince = {"id": null, "name": '请选择省份'};
-    $scope.selectedCity = {"id": null, "name": '请选择城市'};
-    $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
+    // 获取路由参数
+    $scope.nowTab = $stateParams.tab ? $stateParams.tab : $scope.nowTab;
 
     // 获取用户相关信息
     $scope.getUserInfomation = function () {
@@ -364,7 +647,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     $scope.editMyInformation = function () {
         $scope.editMy = true;
-        if($scope.user.school_id){
+        if ($scope.user.school_id) {
             $scope.selectedProvince.id = $scope.user.province_id;
             $scope.selectedProvince.name = $scope.user.province_name;
             $scope.selectedCity.id = $scope.user.city_id;
@@ -387,7 +670,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     };
 
     $scope.changeSex = function (sex) {
-        switch (sex){
+        switch (sex) {
             case 's':
                 $scope.user.sex = 0;
                 break;
@@ -448,7 +731,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             for (var i = 1; i <= $scope.page; i++) {
                 $scope.myProducspageList.push([i, {}]);
             }
-            if($scope.myProducspageList[0]) $scope.setPageCss(page-1, $scope.myProducspageList)
+            if ($scope.myProducspageList[0]) $scope.setPageCss(page - 1, $scope.myProducspageList)
         })
     };
 
@@ -478,13 +761,13 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             for (var i = 1; i <= $scope.page; i++) {
                 $scope.myCollectspageList.push([i, {}]);
             }
-            if($scope.myCollectspageList[0]) $scope.setPageCss(page-1, $scope.myCollectspageList)
+            if ($scope.myCollectspageList[0]) $scope.setPageCss(page - 1, $scope.myCollectspageList)
         })
     };
 
     // 取消收藏
     $scope.cancelCollect = function (product) {
-        Products.productscollect.delete({"id": product},function (res) {
+        Products.productscollect.delete({"id": product}, function (res) {
             $scope.loginErr = true;
             $scope.errMessage = '取消成功！';
             $scope.getProductCollects(1);
@@ -507,7 +790,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             for (var i = 1; i <= $scope.page; i++) {
                 $scope.myNewList.push([i, {}]);
             }
-            if($scope.myNewList[0]) $scope.setPageCss(page-1, $scope.myNewList)
+            if ($scope.myNewList[0]) $scope.setPageCss(page - 1, $scope.myNewList)
         });
     };
 
@@ -551,7 +834,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     $scope.getTabContent = function (item) {
         $scope.nowTab = item;
-        switch (item){
+        switch (item) {
             case 'myProducts':
                 $scope.getMyProducts(1);
                 break;
@@ -580,7 +863,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     //上一页
     $scope.Previous = function (item) {
         if ($scope.selPage == 1) return;
-        switch (item){
+        switch (item) {
             case 'collect':
                 $scope.getProductCollects($scope.selPage - 1);
                 break;
@@ -596,7 +879,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     //下一页
     $scope.Next = function (item) {
         if ($scope.selPage == $scope.pageList.length) return;
-        switch (item){
+        switch (item) {
             case 'collect':
                 $scope.getProductCollects($scope.selPage + 1);
                 break;
