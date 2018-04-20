@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(function () {
-        document.title = '享忆-首页';
+        document.title = '享忆-商品列表';
         //搜索框下滑
         $(window).scroll(function () {
             //获得滚动条距离顶部距离
@@ -77,7 +77,7 @@
                         <div class="col-md-8">
                             <div class="input-group">
                                 <div class="top-search">
-                                    <input type="text" class="form-control" placeholder="搜你享搜!" ng-model="productSearchContent">
+                                    <input id="detail-top-search" type="text" class="form-control" placeholder="搜你享搜!" ng-model="productSearchContent">
                                     <ul ng-style="searchList">
                                         <li ng-repeat="classification in productClassificationList" ng-click="search(classification)"><strong>&nbsp找&nbsp;'{{productSearchContent}}'&nbsp;{{classification.name}}</strong></li>
                                     </ul>
@@ -115,7 +115,7 @@
             </div>
         </div>
         <ul class="day_goods">
-            <li ng-repeat="product in searchProducts" class="product-hover">
+            <li ng-repeat="product in searchProducts" class="product-hover" ng-click="goToDetail(product)">
                 <a href="" class="a_con_list">
                     <p class="p_img"><img ng-src="{{product.img}}"/></p>
                 </a>
@@ -138,7 +138,6 @@
         </div>
     </div>
 </div>
-
 
 <!--下拉搜索-->
 <div id="nav" class="search_fixed">

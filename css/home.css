@@ -300,7 +300,6 @@ ul li{
     font-size: 12px;
     border-radius: 5px;
     text-align: center;
-    opacity: 0.3;
     z-index: 9;
 }
 .groDiv li .s {
@@ -388,13 +387,15 @@ ul li{
     overflow: hidden;
 }
 .groUlOut li{
-    height: 100%;
-	margin: 4px 3px;
-	border: 1px solid transparent;
+    height: 85%;
+    margin: 4px 3px;
+    border: 1px solid #eaeaea;
     position: relative;
+    border-radius: 10px
 }
 .groUlOut li:hover{
-	border: 1px solid #C81623;
+	border: 1px solid #eaeaea;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
 }
 .groUlOut li img {
     display: block;
@@ -539,12 +540,13 @@ ul li{
 }
 .day_goods{
 	width: 100%;
-	padding-top: 20px;
+	padding-top: 40px;
 	overflow: hidden;
 }
 .day_goods li {
     float: left;
     border: 1px solid #eaeaea;
+    border-radius: 20px;
     margin-right: 12px;
     width: 286px;
     padding: 0 0 5px 0;

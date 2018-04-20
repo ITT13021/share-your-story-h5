@@ -155,7 +155,7 @@
                     <div style="position: relative;overflow: hidden;">
                         <ul class="groUlOut">
                             <li style="float: left;width: 224px;" ng-repeat="i in products" ng-click="goToDetail(i)">
-                                <div class="x">精选电脑</div>
+                                <div class="x">精选</div>
                                 <a class="pro">
                                     <img ng-src="{{i.img}}" style="padding-right: 2px"/>
                                 </a>
@@ -190,7 +190,7 @@
             </div>
         </div>
         <ul class="day_goods">
-            <li ng-repeat="product in bookProducts" class="product-hover">
+            <li ng-repeat="product in bookProducts" class="product-hover" ng-click="goToDetail(product)">
                 <a href="" class="a_con_list">
                     <p class="p_img"><img ng-src="{{product.img}}"/></p>
                 </a>
@@ -215,7 +215,7 @@
             </div>
         </div>
         <ul class="day_goods">
-            <li ng-repeat="product in electricProducts" class="product-hover">
+            <li ng-repeat="product in electricProducts" class="product-hover" ng-click="goToDetail(product)">
                 <a href="" class="a_con_list">
                     <p class="p_img"><img ng-src="{{product.img}}"/></p>
                 </a>
@@ -239,7 +239,7 @@
             </div>
         </div>
         <ul class="day_goods">
-            <li ng-repeat="product in otherProducts" class="product-hover">
+            <li ng-repeat="product in otherProducts" class="product-hover" ng-click="goToDetail(product)">
                 <a href="" class="a_con_list">
                     <p class="p_img"><img ng-src="{{product.img}}"/></p>
                 </a>

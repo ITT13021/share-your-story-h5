@@ -69,7 +69,12 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="搜你想搜!">
+                                <div class="top-search">
+                                    <input type="text" class="form-control" placeholder="搜你享搜!" ng-model="searchContent">
+                                    <ul ng-style="searchList">
+                                        <li ng-repeat="classification in productClassificationList" ng-click="search(classification)"><strong>&nbsp找&nbsp;'{{searchContent}}'&nbsp;{{classification.name}}</strong></li>
+                                    </ul>
+                                </div>
                                 <span class="input-group-btn">
                                     <button class="btn btn-danger" type="button" style="height: 53.08px;width: 58px">
                                         搜索
@@ -251,7 +256,7 @@
                 <div ng-if="myProducspageList.length>1">
                     <ul class="pagination" style="float: right;margin-right: 110px">
                         <li class="page-item" ng-click="Previous('myProducts')"><a class="page-link">Previous</a></li>
-                        <li class="page-item" ng-repeat="i in myProducspageList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-repeat="i in myProducspageList" ng-click="getPageData(i[0], 'myProducts')"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
                         <li class="page-item" ng-click="Next('myProducts')"><a class="page-link">Next</a></li>
                     </ul>
                 </div>
@@ -298,7 +303,7 @@
                 <div ng-if="myCollectspageList.length>1">
                     <ul class="pagination" style="float: right;margin-right: 110px">
                         <li class="page-item" ng-click="Previous('collect')"><a class="page-link">Previous</a></li>
-                        <li class="page-item" ng-repeat="i in myCollectspageList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-repeat="i in myCollectspageList" ng-click="getPageData(i[0], 'collect')"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
                         <li class="page-item" ng-click="Next('collect')"><a class="page-link">Next</a></li>
                     </ul>
                 </div>
@@ -335,7 +340,7 @@
                 <div ng-if="myNewList.length>1">
                     <ul class="pagination" style="float: right;margin-right: 110px;margin-top: 21px">
                         <li class="page-item" ng-click="Previous('news')"><a class="page-link">Previous</a></li>
-                        <li class="page-item" ng-repeat="i in myNewList" ng-click="getPageData(i[0])"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-repeat="i in myNewList" ng-click="getPageData(i[0], 'news')"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
                         <li class="page-item" ng-click="Next('news')"><a class="page-link">Next</a></li>
                     </ul>
                 </div>

@@ -1,9 +1,10 @@
 <script type="text/javascript">
     $(function () {
+        document.title = '享忆-商品详情';
         //搜索框下滑
         $(window).scroll(function () {
-            //获得滚动条距离顶部距离
             var t = $(document).scrollTop();
+            //获得滚动条距离顶部距离
             if (t > 100) {
                 $("#nav").show();
             } else {
@@ -64,7 +65,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="搜你享搜!">
+                                <input id="detail-top-search" type="text" class="form-control" placeholder="搜你享搜!">
                                 <span class="input-group-btn">
                                     <button class="btn btn-danger" type="button" style="height: 53.08px;width: 58px">
                                         搜索
@@ -88,7 +89,7 @@
         <div class="con_top">
             <div class="con_top_l">
                 <div class="tab-w">
-                    <img src="{{product.img}}" style="width: 100%"/>
+                    <img src="{{product.img}}" style="width: 100%;border-radius: 20px"/>
                 </div>
                 <div class="detail_share">
                     <div class="detail_sc" ng-click="collect()" data-title="消息" data-toggle="collectpopover" data-trigger="focus" data-placement="left" data-content="收藏成功！">
