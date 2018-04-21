@@ -427,7 +427,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
     // 获取用户相关信息和产品内容
     $scope.user = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
-    $scope.product = JSON.parse($cookies.get("product"));
+    $scope.product = $cookies.get("product") ? JSON.parse($cookies.get("product")) : null;
 
     // 登录或注册
     $scope.registerOrLogin = function (page) {
