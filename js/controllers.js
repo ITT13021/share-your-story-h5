@@ -291,9 +291,21 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.parentMessage = null;  // 父级留言
     $scope.message = {};
     $scope.want = false;
+    $scope.searchContent = '';
+    $scope.searchList = {"display": "none"};
+
+    $scope.$watch('searchContent', function (newVal) {
+        if ($scope.searchContent != '') $scope.searchList = {};
+        else $scope.searchList = {"display": "none"};
+    });
+
+    $scope.search = function (classification) {
+        if ($scope.searchContent == '') return;
+        $state.go('products', {"searchContent": $scope.searchContent, "searchClassification": classification});
+    };
 
     // 监听事件，获取留言
-    ProductMessageDoRefresh = $rootScope.$on('ProductMessageDoRefresh', function (event, data) {
+    var ProductMessageDoRefresh = $rootScope.$on('ProductMessageDoRefresh', function (event, data) {
         $scope.getProductMessage();
     });
 
@@ -329,6 +341,14 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     };
 
     $scope.getProductMessage();
+
+    // 获取商品分类
+    $scope.getProductClassification = function () {
+        Products.productsclassification.get(function (res) {
+            $scope.productClassificationList = res.results;
+        });
+    };
+    $scope.getProductClassification();
 
     // 上传用户留言
     $scope.uploadMessage = function () {

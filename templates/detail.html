@@ -65,9 +65,14 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input id="detail-top-search" type="text" class="form-control" placeholder="搜你享搜!">
+                                <div class="top-search">
+                                    <input id="detail-top-search" type="text" class="form-control" placeholder="搜你享搜!" ng-model="searchContent">
+                                    <ul ng-style="searchList">
+                                        <li ng-repeat="classification in productClassificationList" ng-click="search(classification)"><strong>&nbsp找&nbsp;'{{searchContent}}'&nbsp;{{classification.name}}</strong></li>
+                                    </ul>
+                                </div>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-danger" type="button" style="height: 53.08px;width: 58px">
+                                    <button class="btn btn-danger" type="button" style="height: 53.08px;width: 58px"  ng-click="search()">
                                         搜索
                                     </button>
                                 </span>
@@ -190,9 +195,14 @@
             <div class="s_fixed_r">
                 <form action="" method="post">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="搜你享搜!" style="height: 35.08px;width: 600px">
+                        <div class="top-search">
+                            <input type="text" class="form-control" placeholder="搜你享搜!" ng-model="searchContent" style="height: 35.08px;width: 600px">
+                            <ul ng-style="searchList" style="width: 600px;">
+                                <li ng-repeat="classification in productClassificationList" ng-click="search(classification)"><strong>&nbsp找&nbsp;'{{searchContent}}'&nbsp;{{classification.name}}</strong></li>
+                            </ul>
+                        </div>
                         <span class="input-group-btn">
-                        <span style="font-size: 20px; line-height: 35px; margin-left: 10px; color: white">
+                        <span style="font-size: 20px; line-height: 35px; margin-left: 10px; color: white; cursor: pointer" ng-click="search()">
                             搜索
                         </span>
                     </span>
