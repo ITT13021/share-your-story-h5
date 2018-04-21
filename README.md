@@ -27,8 +27,11 @@
 **5. 使用**
 
 npm intall -g bower
+
 bower install 
+
 run_server.bat
+
 http://127.0.0.1:8100
 
 **6. 遇到的问题**
