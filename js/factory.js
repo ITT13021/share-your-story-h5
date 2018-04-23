@@ -12,7 +12,7 @@ shareStoryApp.factory('User', function ($resource) {
     var api = 'http://127.0.0.1:8000/api/';
     return {
         products: $resource(api + 'products/products/:id/?v=1', {}, {'update': {method: 'PUT'}}),
-        productsclassification: $resource(api + 'products/productsclassification'),
+        productsclassification: $resource(api + 'products/productsclassification/?v=1'),
         productscollect: $resource(api + 'products/productscollect/:id/?v=1'),
         productsmessage: $resource(api + 'products/productsmessage/?v=1')
     }
