@@ -154,7 +154,7 @@
                 <div class="groDiv">
                     <div style="position: relative;overflow: hidden;">
                         <ul class="groUlOut">
-                            <li style="float: left;width: 224px;" ng-repeat="i in products" ng-click="goToDetail(i)">
+                            <li class="layui-anim layui-anim-upbit" style="float: left;width: 224px;" ng-repeat="i in products" ng-click="goToDetail(i)">
                                 <div class="x">精选</div>
                                 <a class="pro">
                                     <img ng-src="{{i.img}}" style="padding-right: 2px"/>
@@ -260,7 +260,7 @@
 
 <!--下拉搜索-->
 <div id="nav" class="search_fixed">
-    <div class="w1200">
+    <div class="w1200  layui-anim layui-anim-upbit">
         <div class="s_fixed_l"><img src="../image/search_logo.png" style="width: 100px;height: 100px;margin-top: -25px;margin-left: 20px"/></div>
         <div class="s_fixed_r">
             <form action="" method="post">
@@ -396,7 +396,7 @@
 <!--右侧导航-->
 
 <!-- 模态框 -->
-<div class="modal fade" id="addedProduct">
+<div class="modal fade layui-anim layui-anim-scaleSpring" id="addedProduct">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 

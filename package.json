@@ -1,0 +1,25 @@
+{
+  "name": "share-your-story-h5",
+  "version": "1.0.0",
+  "description": "时隔几个月，得个空闲。年前、年后都在忙着写公司的关于年会活动的抽奖项目，大家辛辛苦苦加班2个月完成的项目，领导们在年会上，临时决定不用了....虽然没觉得怎样，但写这篇博客，突然想到，就说了。",
+  "main": "index.js",
+  "dependencies": {
+    "_bower@1.8.4@bower": "^1.8.4",
+    "layui-src": "^2.2.5",
+    "bower": "^1.8.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ITT13021/share-your-story-h5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ITT13021/share-your-story-h5/issues"
+  },
+  "homepage": "https://github.com/ITT13021/share-your-story-h5#readme"
+}

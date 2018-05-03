@@ -25,6 +25,7 @@ ul li{
 	background: #FFFFFF;
 }
 .header_top{
+    padding-left: 10px;
 	border-top: 1px solid #dfdfdf;
 	border-bottom: 1px solid #dfdfdf;
 	height: 36px;

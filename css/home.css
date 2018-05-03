@@ -553,6 +553,8 @@ ul li{
     background-color: #f5f5f5;
     margin-bottom: 15px;
     position: relative;
+    bottom: 0;
+    transition:bottom .4s ease-in-out;
 }
 .day_goods li a p img{
 	width: 286px;

@@ -642,7 +642,6 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
 
 })
 .controller('UserCtrl', function ($scope, User, $state, $rootScope, $cookies, Products, News, $stateParams) {
-
     // 声明变量
     $scope.selPage = 1; // 选中页数
     $scope.nowTab = 'myInformation';    // 当前所在tab
@@ -651,6 +650,19 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
     $scope.selectedSchool = {"id": null, "schoolname": '请选择学校'};
     $scope.searchContent = '';
     $scope.searchList = {"display": "none"};
+    $scope.transformTest = {};
+    $scope.transformMenus = {"display": "none"};
+
+    $scope.transformTab = function () {
+        if($scope.transformTest.hasOwnProperty('transform')) {
+            $scope.transformTest ={};
+            $scope.transformMenus = {"display": "none"};
+        }
+        else {
+            $scope.transformMenus = {};
+            $scope.transformTest = {"transform" : "rotate(180deg)","line-height": "17px"}
+        }
+    };
 
     $scope.$watch('searchContent', function (newVal) {
         if ($scope.searchContent != '') $scope.searchList = {};
@@ -779,7 +791,8 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             for (var i = 1; i <= $scope.page; i++) {
                 $scope.myProducspageList.push([i, {}]);
             }
-            if ($scope.myProducspageList[0]) $scope.setPageCss(page - 1, $scope.myProducspageList)
+            if ($scope.myProducspageList[0]) $scope.setPageCss(page - 1, $scope.myProducspageList);
+            $scope.pageList = $scope.myProducspageList;
         })
     };
 
@@ -788,7 +801,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         Products.products.update({id: product}, {'status': status}, function (res) {
             $scope.loginErr = true;
             $scope.errMessage = status == 1 ? '下架成功！' : '上架成功';
-            $scope.getMyProducts(1);
+            $scope.getMyProducts($scope.selPage);
         }, function (err) {
             $scope.loginErr = true;
             $scope.errMessage = status == 1 ? '下架失败！' : '上架失败';
@@ -809,7 +822,8 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
             for (var i = 1; i <= $scope.page; i++) {
                 $scope.myCollectspageList.push([i, {}]);
             }
-            if ($scope.myCollectspageList[0]) $scope.setPageCss(page - 1, $scope.myCollectspageList)
+            if ($scope.myCollectspageList[0]) $scope.setPageCss(page - 1, $scope.myCollectspageList);
+            $scope.pageList = $scope.myCollectspageList;
         })
     };
 
@@ -818,7 +832,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         Products.productscollect.delete({"id": product}, function (res) {
             $scope.loginErr = true;
             $scope.errMessage = '取消成功！';
-            $scope.getProductCollects(1);
+            $scope.getProductCollects($scope.selPage);
         }, function (err) {
             $scope.loginErr = true;
             $scope.errMessage = '取消失败！';
@@ -834,11 +848,12 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         News.news.get({'page': page}, function (res) {
             $scope.myNews = res.results;
             $scope.page = Math.ceil(res.count / 4);
-            $scope.myNewList = [];
+            $scope.myNewsPageList = [];
             for (var i = 1; i <= $scope.page; i++) {
-                $scope.myNewList.push([i, {}]);
+                $scope.myNewsPageList.push([i, {}]);
             }
-            if ($scope.myNewList[0]) $scope.setPageCss(page - 1, $scope.myNewList)
+            if ($scope.myNewsPageList[0]) $scope.setPageCss(page - 1, $scope.myNewsPageList);
+            $scope.pageList = $scope.myNewsPageList;
         });
     };
 
@@ -884,6 +899,7 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
         $scope.nowTab = item;
         switch (item) {
             case 'myProducts':
+                $scope.selPage = 1;
                 $scope.getMyProducts(1);
                 break;
             case 'myInformation':
@@ -891,9 +907,11 @@ shareStoryApp.controller('LoginCtrl', function ($scope, User, $rootScope, $state
                 $scope.myProductsCss = $scope.myCollectCss = $scope.myNewsCss = $scope.tab_css[1];
                 break;
             case 'myCollect':
+                $scope.selPage = 1;
                 $scope.getProductCollects(1);
                 break;
             case 'myNews':
+                $scope.selPage = 1;
                 $scope.getMyNews(1);
                 break;
         }

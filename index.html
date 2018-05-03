@@ -1,65 +1,75 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>享忆</title>
-		<link rel="stylesheet" type="text/css" href="./css/login.css"/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>享忆</title>
+    <link rel="stylesheet" type="text/css" href="./css/login.css"/>
 
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/head.css">
-		<link rel="stylesheet" href="css/home.css">
-		<link rel="stylesheet" href="css/footer.css">
-        <link rel="stylesheet" href="css/detail.css">
-		<link rel="stylesheet" href="css/suercenter.css">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <link href="image/favicon.ico" rel="icon" type="image/x-icon" />
-        <style>
-            input:focus, textarea:focus {
-                outline: none;
-            }
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/head.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/suercenter.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link href="image/favicon.ico" rel="icon" type="image/x-icon"/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-width: 960px;
+        }
 
-            .table th, .table td {
-                text-align: center;
-                vertical-align: middle!important;
-            }
-            ul.pagination li a {
-                color: red;
-            }
-			.product-hover:hover{
-				position: relative;
-				bottom: 20px;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
-			}
-        </style>
-	</head>
-	<body ng-app="shareStoryApp" ng-cloak>
-        <div ui-view></div>
-        <script src="./bower_components/bootstrap/assets/js/vendor/jquery-slim.min.js"></script>
-        <!--<script src="./bower_components/bootstrap/assets/js/vendor/popper.min.js"></script>-->
+        input:focus, textarea:focus {
+            outline: none;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        ul.pagination li a {
+            color: red;
+        }
+
+        .product-hover:hover {
+            position: relative;
+            bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+        }
+    </style>
+    <link rel="stylesheet" href="node_modules/layui-src/dist/css/layui.css">
+    <script src="node_modules/layui-src/dist/layui.js"></script>
+</head>
+<body ng-app="shareStoryApp" ng-cloak>
+<div ui-view></div>
+<script src="./bower_components/bootstrap/assets/js/vendor/jquery-slim.min.js"></script>
+<!--<script src="./bower_components/bootstrap/assets/js/vendor/popper.min.js"></script>-->
 
 
-        <!-- Angular JavaScript -->
-        <script src="./bower_components/angular/angular.min.js"></script>
-        <script src="./bower_components/angular-route/angular-route.min.js"></script>
-        <script src="./bower_components/angular-resource/angular-resource.min.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<!-- Angular JavaScript -->
+<script src="./bower_components/angular/angular.min.js"></script>
+<script src="./bower_components/angular-route/angular-route.min.js"></script>
+<script src="./bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 
-        <!-- UnderScore.js -->
-        <script src="bower_components/underscore/underscore-min.js"></script>
+<!-- UnderScore.js -->
+<script src="bower_components/underscore/underscore-min.js"></script>
 
-        <!--<script src="./common_js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>-->
-	</body>
+<!--<script src="./common_js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>-->
+</body>
 
-	<script src="./js/config.js"></script>
-	<script src="./js/controllers.js"></script>
-	<script src="./js/factory.js"></script>
+<script src="./js/config.js"></script>
+<script src="./js/controllers.js"></script>
+<script src="./js/factory.js"></script>
 
-	<!-- Bootstrap JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="./bower_components/bootstrap/assets/js/vendor/popper.min.js"></script>
-	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="./bower_components/bootstrap/assets/js/vendor/popper.min.js"></script>
+<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </html>

@@ -91,7 +91,7 @@
 <!--头部end-->
 <div class="w1000 ClearFix margin_top20">
     <!--左侧end-->
-    <div class="ur_left">
+    <div class="ur_left layui-anim layui-anim-scaleSpring">
         <div class="ur_slide">
             <a href=""><h2 class="slide_h2"><b></b>我的享忆</h2></a>
             <ul class="slide_list">
@@ -138,17 +138,29 @@
         <!--我的资料-->
         <div class="uc_c_right" ng-if="nowTab == 'myInformation'">
             <div class="order_tips">
-                <ul>
+                <ul class="tab_content_header_big_screen">
                     <li>
-                        <div class="d_h2"><h2><span></span>我的资料</h2></div>
+                        <div class="d_h2 layui-anim layui-anim-scaleSpring"><h2><span></span>我的资料</h2></div>
                     </li>
+                </ul>
+                <ul class="tab_content_header_small_screen">
+                    <li style="line-height: 22px;width: 110px">
+                        <div class="d_h2 layui-anim layui-anim-up" style="width:80px; position: relative;cursor: pointer;" ng-click="transformTab()">
+                            <span>我的资料</span>
+                            <i class="layui-icon" ng-style="transformTest" style="position: absolute;top: 12px;left: 52px">&#xe603;</i>
+                        </div>
+                    </li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myInformation')">我的资料</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myProducts')">我的发布</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myCollect')">我的收藏</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myNews')">我的消息</li>
                 </ul>
             </div>
             <div style="width:100%;height: 358px">
                 <img class="card-img-top" src="http://static.runoob.com/images/mix/img_avatar.png" alt="Card image" style="width: 200px;height: 200px;margin: 80px 0 0 100px">
                 <div style="float: right;width: 500px;margin-top: 80px">
                     <ul ng-if="!editMy">
-                        <li>
+                        <li style="margin-bottom: 15px">
                             <p>
                                 <label>{{user.username}}</label>
                                 <label style="margin-left: 100px" ng-if="user.sex==0">这个人的性别很神秘！</label>
@@ -156,25 +168,25 @@
                                 <label style="margin-left: 100px" ng-if="user.sex==2">我是女生</label>
                             </p>
                         </li>
-                        <li><p><label>{{user.school}}</label></p></li>
-                        <li><p><label>{{user.cellphone}}</label></p></li>
-                        <li><p><label ng-if="user.signature">{{user.signature}}</label><label ng-if="!user.signature">我的个性就是不写个性签名~~</label></p></li>
-                        <li>
+                        <li ng-if="user.school" style="margin-bottom: 15px"><p><label>{{user.school}}</label></p></li>
+                        <li ng-if="user.cellphone" style="margin-bottom: 15px"><p><label>{{user.cellphone}}</label></p></li>
+                        <li><p><label ng-if="user.signature" style="margin-bottom: 15px">{{user.signature}}</label><label ng-if="!user.signature">我的个性就是不写个性签名~~</label></p></li>
+                        <li style="margin-top: 15px">
                             <button class="btn btn-outline-danger" type="button" style="height: 30px;width: 200px;font-size: 10px" ng-click="editMyInformation()">编辑</button>
                         </li>
                     </ul>
                     <ul ng-if="editMy" class="edit-my-info">
                         <li>
                             <p>
-                                <input maxlength="15" type="text" class="form-control" style="width: 150px;display: inline-block" ng-model="user.username"/>
-                                <input type="number"  maxlength="11" class="form-control" placeholder="请输入手机号" style="width: 150px;margin-right: 140px;float: right" ng-model="user.cellphone" />
+                                <input title="用户名" maxlength="15" type="text" class="form-control" style="width: 150px;display: inline-block" ng-model="user.username"/>
+                                <input title="手机号" type="number" maxlength="11" class="form-control" placeholder="请输入手机号" style="width: 150px;margin-right: 140px;float: right" ng-model="user.cellphone"/>
                             </p>
                         </li>
                         <li>
                             <form>
-                                <label class="radio-inline" style="margin-right: 10px"><input type="radio" name="optradio" ng-checked="user.sex==0" onChange="angular.element(this).scope().changeSex('s')">&nbsp;我要保密</label>
-                                <label class="radio-inline" style="margin-right: 10px"><input type="radio" name="optradio" ng-checked="user.sex==2" onChange="angular.element(this).scope().changeSex('g')">&nbsp;我是女生</label>
-                                <label class="radio-inline"><input type="radio" name="optradio" ng-checked="user.sex==1" onChange="angular.element(this).scope().changeSex('b')">&nbsp;我是男生</label>
+                            <label class="radio-inline" style="margin-right: 10px"><input type="radio" name="optradio" ng-checked="user.sex==0" onChange="angular.element(this).scope().changeSex('s')">&nbsp;我要保密</label>
+                            <label class="radio-inline" style="margin-right: 10px"><input type="radio" name="optradio" ng-checked="user.sex==2" onChange="angular.element(this).scope().changeSex('g')">&nbsp;我是女生</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" ng-checked="user.sex==1" onChange="angular.element(this).scope().changeSex('b')">&nbsp;我是男生</label>
                             </form>
                         </li>
                         <li style="width: 100%; height: 45px">
@@ -220,10 +232,22 @@
         <!--我的发布-->
         <div class="uc_c_right" ng-if="nowTab == 'myProducts'">
             <div class="order_tips">
-                <ul>
+                <ul class="tab_content_header_big_screen">
                     <li>
                         <div class="d_h2"><h2><span></span>我的发布</h2></div>
                     </li>
+                </ul>
+                <ul class="tab_content_header_small_screen">
+                    <li style="line-height: 22px;width: 110px">
+                        <div class="d_h2" style="width:80px; position: relative;cursor: pointer;" ng-click="transformTab()">
+                            <span>我的发布</span>
+                            <i class="layui-icon" ng-style="transformTest" style="position: absolute;top: 12px;left: 52px">&#xe603;</i>
+                        </div>
+                    </li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myInformation')">我的资料</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myProducts')">我的发布</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myCollect')">我的收藏</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myNews')">我的消息</li>
                 </ul>
             </div>
 
@@ -271,10 +295,22 @@
         <!--我的收藏-->
         <div class="uc_c_right" ng-if="nowTab == 'myCollect'">
             <div class="order_tips">
-                <ul>
+                <ul class="tab_content_header_big_screen">
                     <li>
                         <div class="d_h2"><h2><span></span>我的收藏</h2></div>
                     </li>
+                </ul>
+                <ul class="tab_content_header_small_screen">
+                    <li style="line-height: 22px;width: 110px">
+                        <div class="d_h2" style="width:80px; position: relative;cursor: pointer;" ng-click="transformTab()">
+                            <span>我的收藏</span>
+                            <i class="layui-icon" ng-style="transformTest" style="position: absolute;top: 12px;left: 52px">&#xe603;</i>
+                        </div>
+                    </li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myInformation')">我的资料</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myProducts')">我的发布</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myCollect')">我的收藏</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myNews')">我的消息</li>
                 </ul>
             </div>
 
@@ -318,10 +354,22 @@
         <!--我的消息-->
         <div class="uc_c_right" ng-if="nowTab == 'myNews'">
             <div class="order_tips">
-                <ul>
+                <ul class="tab_content_header_big_screen">
                     <li>
                         <div class="d_h2"><h2><span></span>我的消息</h2></div>
                     </li>
+                </ul>
+                <ul class="tab_content_header_small_screen">
+                    <li style="line-height: 22px;width: 110px">
+                        <div class="d_h2" style="width:80px; position: relative;cursor: pointer;" ng-click="transformTab()">
+                            <span>我的消息</span>
+                            <i class="layui-icon" ng-style="transformTest" style="position: absolute;top: 12px;left: 52px">&#xe603;</i>
+                        </div>
+                    </li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myInformation')">我的资料</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myProducts')">我的发布</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myCollect')">我的收藏</li>
+                    <li style="width: 80px; cursor: pointer" ng-style="transformMenus" ng-click="getTabContent('myNews')">我的消息</li>
                 </ul>
             </div>
             <div>
@@ -337,10 +385,10 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="myNewList.length>1">
+                <div ng-if="myNewsPageList.length>1">
                     <ul class="pagination" style="float: right;margin-right: 110px;margin-top: 21px">
                         <li class="page-item" ng-click="Previous('news')"><a class="page-link">Previous</a></li>
-                        <li class="page-item" ng-repeat="i in myNewList" ng-click="getPageData(i[0], 'news')"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
+                        <li class="page-item" ng-repeat="i in myNewsPageList" ng-click="getPageData(i[0], 'news')"><a class="page-link" ng-style="i[1]">{{i[0]}}</a></li>
                         <li class="page-item" ng-click="Next('news')"><a class="page-link">Next</a></li>
                     </ul>
                 </div>
@@ -352,7 +400,7 @@
 <!--底部公用-->
 <div class="footer">
     <div class="footer_b w1200"></div>
-    <div class="footer_help w1200" style="padding-left: 200px">
+    <div class="footer_help w1200">
         <div class="footer1_l">
             <dl class="helpDl">
                 <dt><h5>使用帮助</h5></dt>
@@ -412,7 +460,7 @@
         </div>
     </div>
     <div class="footer_bottom">
-        <div class="w1200">
+        <div class="w1200" style="width: 900px">
             <p>
                 <span class="font_arial">Copyright© 2006-2016 happigo. All Rights Reserved </span>
                 免费服务热线: 400-705-1111 | 固话也可拨打: 800-705-1111
