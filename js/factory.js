@@ -1,6 +1,6 @@
 shareStoryApp.factory('User', function ($resource) {
     var api_url = window.location.hostname;
-	var api = api_url.indexOf('35') != 0 ? 'http://' + api_url + ':8000/api/' : api_url + '/api/';
+	var api = api_url.indexOf('35') != 0 ? 'http://' + api_url + ':8000/api/' : '/api/';
 	return {
 		login: $resource(api + 'user/login'),
 		user: $resource(api + 'user/user/:id/?v=1', {}, {'update': {method: 'PUT'}}),
@@ -11,7 +11,7 @@ shareStoryApp.factory('User', function ($resource) {
 })
 .factory('Products', function ($resource) {
     var api_url = window.location.hostname;
-    var api = api_url.indexOf('35') != 0 ? 'http://' + api_url + ':8000/api/' : api_url + '/api/';
+    var api = api_url.indexOf('35') != 0 ? 'http://' + api_url + ':8000/api/' : '/api/';
     return {
         products: $resource(api + 'products/products/:id/?v=1', {}, {'update': {method: 'PUT'}}),
         productsclassification: $resource(api + 'products/productsclassification/?v=1'),
