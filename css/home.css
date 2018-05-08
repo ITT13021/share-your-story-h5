@@ -58,8 +58,9 @@ ul li{
 
 .home_menu_title>h5{
     height: 50px;
-    line-height: 50px;
-    padding-left: 20px
+    line-height: 40px;
+    padding-left: 20px;
+    font-size: 18px
 }
 
 .home_menu{
