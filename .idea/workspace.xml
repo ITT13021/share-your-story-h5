@@ -1,120 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e14f2b7d-d670-4bd0-94c5-b5e524b4332f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/image/c.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_d_1.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_s_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_s_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_s_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_s_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_s_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_x_1.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_x_2.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_x_3.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_x_4.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/c_x_5.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_1.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_2.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_c_1.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_c_2.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_s_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_s_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_s_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_s_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/con_s_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_6.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_7.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/d_8.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_10.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_11.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_12.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_6.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_7.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_8.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/day_9.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/detail_icon_list.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/jinpin_1.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/jinpin_2.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/jinpin_3.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/jinpin_4.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/list_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/list_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/list_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/list_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_6.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_7.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/p_8.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/pin_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/pinlun_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/search_logo.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_11.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_12.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_6.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_7.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_8.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/shop_9.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/submit_shop.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_10.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_11.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_12.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_6.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_7.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_8.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/t_9.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/tm_bg.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_2_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_2_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_2_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_2_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_2_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/top_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/true_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/tui_1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/tui_2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/tui_3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/tui_4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/tui_5.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/uc_icon_list.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/uc_jf_icon_list.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/ur_icon_list.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/vedio_icon_list.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/web-101-101-1.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/web-101-101-2.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/web-101-101-3.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/web-101-101-4.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/image/web-101-101-5.jpg" afterPath="" />
-    </list>
+    <list default="true" id="e14f2b7d-d670-4bd0-94c5-b5e524b4332f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -221,7 +108,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="310" />
     <option name="y" value="137" />
     <option name="width" value="2055" />
@@ -334,15 +221,15 @@
       <workItem from="1524533730537" duration="77000" />
       <workItem from="1524639162588" duration="782000" />
       <workItem from="1525312827598" duration="20385000" />
-      <workItem from="1525658709495" duration="539000" />
+      <workItem from="1525658709495" duration="907000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="222216000" />
+    <option name="totallyTimeSpent" value="222584000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="310" y="137" width="2055" height="1243" extended-state="1" />
+    <frame x="310" y="137" width="2055" height="1243" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17550819" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

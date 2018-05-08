@@ -1,5 +1,5 @@
 shareStoryApp.factory('User', function ($resource) {
-	var api = 'http://127.0.0.1:8000/api/';
+	var api = 'http://35.194.169.77/api/';
 	return {
 		login: $resource(api + 'user/login'),
 		user: $resource(api + 'user/user/:id/?v=1', {}, {'update': {method: 'PUT'}}),
@@ -9,7 +9,7 @@ shareStoryApp.factory('User', function ($resource) {
 	}
 })
 .factory('Products', function ($resource) {
-    var api = 'http://127.0.0.1:8000/api/';
+    var api = 'http://35.194.169.77/api/';
     return {
         products: $resource(api + 'products/products/:id/?v=1', {}, {'update': {method: 'PUT'}}),
         productsclassification: $resource(api + 'products/productsclassification/?v=1'),
@@ -18,7 +18,7 @@ shareStoryApp.factory('User', function ($resource) {
     }
 })
 .factory('News', function ($resource) {
-    var api = 'http://127.0.0.1:8000/api/';
+    var api = 'http://35.194.169.77/api/';
     return {
         news: $resource(api + 'news/news')
     }
